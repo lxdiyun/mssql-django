@@ -29,7 +29,26 @@ def check_special(p, m, n):
     return False
 
 
-def check_case(p, m, n):
+def check_change_line(p, m, n, case_list):
+    p_no = int(p.szbookcaseno)
+    m_no = int(m.szbookcaseno)
+    n_no = int(n.szbookcaseno)
+    n_layer_no = int(n.szbookcaseno[-2:])
+
+    if 1 == n_layer_no:
+        if (m_no + 1) not in case_list:
+            if 1 == m_no - p_no:
+                return True
+
+    if 2 == n_layer_no:
+        if (p_no + 1) not in case_list:
+            if 1 == n_no - m_no:
+                return True
+
+    return False
+
+
+def check_case(p, m, n, case_list):
     p_no = int(p.szbookcaseno)
     m_no = int(m.szbookcaseno)
     n_no = int(n.szbookcaseno)
@@ -41,24 +60,27 @@ def check_case(p, m, n):
     if 2 == (n_no - p_no):
         return True
 
+    if check_change_line(p, m, n, case_list):
+        return True
+
     # 列变换（逆序,6层）
-    if 104 == (p_no - n_no):
-        return True
-    # 列变换（逆序,5层）
-    if 103 == (p_no - n_no):
-        return True
-    # 列变换（逆序,3层）
-    if 101 == (p_no - n_no):
-        return True
-    # 列变换（正序,6层）
-    if 96 == (n_no - p_no):
-        return True
-    # 列变换（正序,5层）
-    if 97 == (n_no - p_no):
-        return True
-    # 列变换（正序,3层）
-    if 99 == (n_no - p_no):
-        return True
+#    if 104 == (p_no - n_no):
+#        return True
+#    # 列变换（逆序,5层）
+#    if 103 == (p_no - n_no):
+#        return True
+#    # 列变换（逆序,3层）
+#    if 101 == (p_no - n_no):
+#        return True
+#    # 列变换（正序,6层）
+#    if 96 == (n_no - p_no):
+#        return True
+#    # 列变换（正序,5层）
+#    if 97 == (n_no - p_no):
+#        return True
+#    # 列变换（正序,3层）
+#    if 99 == (n_no - p_no):
+#        return True
 
     # 排变换
     if n_row_no != p_row_no:
@@ -72,20 +94,19 @@ def check_case(p, m, n):
 
 
 def main():
-    global g_reverse
     cases = Bookcaseidinfo.objects.exclude(szfirstbookid__isnull=True)
     cases = cases.exclude(szfirstbookid__exact='')
-    cases = cases.filter(szbookcaseno__startswith="000015")
+    cases = cases.filter(szbookcaseno__startswith="000014")
     cases = cases.order_by('szpretendindexnum')
     pre_case = None
     current_case = None
     next_case = None
-    g_reverse = False
+    case_list = list(int(case.szbookcaseno) for case in cases)
     for case in cases:
 #        print(case.szbookcaseno)
         next_case = case
         if pre_case and current_case:
-            if not check_case(pre_case, current_case, next_case):
+            if not check_case(pre_case, current_case, next_case, case_list):
                 print("%s <= %s => %s \n" % (pre_case.szbookcaseno,
                                              current_case.szbookcaseno,
                                              next_case.szbookcaseno))
