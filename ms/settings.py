@@ -12,13 +12,13 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc',
-        'HOST': '10.35.24.18',
+        'HOST': '192.168.64.60',
         'NAME': 'STLibDBV2',
         'USER': 'read_only',
-        'PASSWORD': 'read_only123',
+        'PASSWORD': 'only.read',
         'OPTIONS': {
             'driver': '/usr/lib/libtdsodbc.so',
-            'dsn': 'odbc_sqlserver',
+            'dsn': 'odbc_rfid',
         },
 
     }
