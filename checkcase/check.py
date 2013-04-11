@@ -13,6 +13,20 @@ def check_special(p, n):
         '00000102000106': '00000101300801',
         # 二夹层东北区 C,Q 类交界
         '00000899900105': '00000899903201',
+        '00001799901202': '00001799901102',
+
+        # 二楼南区 B 类 高层套书
+        '00001799901102': '00001799901002',
+        '00001799901002': '00001799900902',
+        '00001799900902': '00001799900702',
+        '00001799900702': '00001799900802',
+        '00001799900802': '00001799900101',
+        '00001700600406': '00001799901203',
+        '00001799901207': '00001799901103',
+        '00001799901107': '00001799901003',
+        '00001799901007': '00001799900903',
+        '00001799900907': '00001799900803',
+        '00001799900807': '00001799900703',
     }
 
     key = p.szbookcaseno
@@ -25,11 +39,11 @@ def check_special(p, n):
 
 def check_line_change(p, n, case_list):
     p_no = int(p.szbookcaseno)
+    n_no = int(n.szbookcaseno)
     p_line_no = int(p.szbookcaseno[-4:-2])
     n_line_no = int(n.szbookcaseno[-4:-2])
-    n_layer_no = int(n.szbookcaseno[-2:])
 
-    if 1 == n_layer_no:
+    if (n_no - 1) not in case_list:
         if (p_no + 1) not in case_list:
             if 1 == abs(n_line_no - p_line_no):
                 return True
@@ -39,11 +53,11 @@ def check_line_change(p, n, case_list):
 
 def check_line_change_999(p, n, case_list):
     p_no = int(p.szbookcaseno)
+    n_no = int(n.szbookcaseno)
     p_row_no = int(p.szbookcaseno[6:9])
     n_row_no = int(n.szbookcaseno[6:9])
-    n_layer_no = int(n.szbookcaseno[-2:])
 
-    if 1 == n_layer_no:
+    if (n_no - 1) not in case_list:
         if (p_no + 1) not in case_list:
             if 999 == n_row_no and 999 != p_row_no:
                 return True
@@ -58,7 +72,7 @@ def check_case(p, n, case_list):
     n_no = int(n.szbookcaseno)
     p_row_no = int(p.szbookcaseno[6:9])
     n_row_no = int(n.szbookcaseno[6:9])
-    n_layer_no = int(n.szbookcaseno[-2:])
+    n_no = int(n.szbookcaseno)
 
     # 层变换
     if 1 == (n_no - p_no):
@@ -70,7 +84,7 @@ def check_case(p, n, case_list):
 
     # 排变换
     if n_row_no != p_row_no:
-        if ((1 == abs(p_row_no - n_row_no)) and (1 == n_layer_no)):
+        if ((1 == abs(p_row_no - n_row_no)) and (n_no - 1) not in case_list):
             return True
 
     # 壁面价变化
@@ -81,10 +95,11 @@ def check_case(p, n, case_list):
     return check_special(p, n)
 
 
-def main():
+def main(prefix):
+    area = "%06d" % prefix
     cases = Bookcaseidinfo.objects.exclude(szfirstbookid__isnull=True)
     cases = cases.exclude(szfirstbookid__exact='')
-    cases = cases.filter(szbookcaseno__startswith="000024")
+    cases = cases.filter(szbookcaseno__startswith=area)
     cases = cases.order_by('szpretendindexnum')
     pre_case = None
     current_case = None
