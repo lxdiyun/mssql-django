@@ -94,6 +94,7 @@ def check_cases(cases):
     current_case = None
     next_case = None
     case_list = list(int(case.szbookcaseno) for case in cases)
+    error_list = list()
     for case in cases:
 #        print(case.szbookcaseno)
         next_case = case
@@ -103,22 +104,27 @@ def check_cases(cases):
                     pre_case_no = pre_case.szbookcaseno
                 else:
                     pre_case_no = None
+                error_case = {"pre": pre_case_no, 
+                              "cur": current_case.szbookcaseno,
+                              "next": next_case.szbookcaseno}
                 print("%s <= %s => %s" % (pre_case_no,
                                           current_case.szbookcaseno,
                                           next_case.szbookcaseno))
 #                print("'%s': '%s',\n" % (current_case.szbookcaseno,
 #                                         next_case.szbookcaseno))
+                error_list.append(error_case)
             else:
                 case_list.remove(int(current_case.szbookcaseno))
         pre_case = current_case
         current_case = next_case
     print(cases.count())
+    return {"error_list": error_list, "count": cases.count()}
 
 
-def main(prefix):
-    area = "%06d" % prefix
+def check_area(area_prefix):
+    area = "%06d" % area_prefix
     cases = Bookcaseidinfo.objects.exclude(szfirstbookid__isnull=True)
     cases = cases.exclude(szfirstbookid__exact='')
     cases = cases.filter(szbookcaseno__startswith=area)
     cases = cases.order_by('szpretendindexnum')
-    check_cases(cases)
+    return check_cases(cases)

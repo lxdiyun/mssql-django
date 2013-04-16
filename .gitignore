@@ -2,5 +2,7 @@
 *.pot
 *.pyc
 *.mo
+*.swp
 local_settings.py
 mysite/media/cache
+static

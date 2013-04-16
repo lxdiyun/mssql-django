@@ -1,0 +1,25 @@
+{% extends "checkcase/base.html" %}
+
+{% block content %}
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>上一层</th>
+			<th>中间层</th>
+			<th>下一层</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for case in error_list %}
+		<tr>   
+			<td >{{ forloop.counter }}</td>   
+			<td >{{ case.pre }} </td>     
+			<td >{{ case.cur }} </td>   
+			<td >{{ case.next }}</td>   
+		</tr>    
+		{% endfor %}
+	</tbody>
+</table>
+
+{% endblock content %}
