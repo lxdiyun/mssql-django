@@ -21,12 +21,6 @@ def check_special(p, n):
         '00001799900902': '00001799900702',
         '00001799900702': '00001799900802',
         '00001799900802': '00001799900101',
-        '00001700600406': '00001799901203',
-        '00001799901207': '00001799901103',
-        '00001799901107': '00001799901003',
-        '00001799901007': '00001799900903',
-        '00001799900907': '00001799900803',
-        '00001799900807': '00001799900703',
     }
 
     key = p.szbookcaseno
@@ -95,12 +89,7 @@ def check_case(p, n, case_list):
     return check_special(p, n)
 
 
-def main(prefix):
-    area = "%06d" % prefix
-    cases = Bookcaseidinfo.objects.exclude(szfirstbookid__isnull=True)
-    cases = cases.exclude(szfirstbookid__exact='')
-    cases = cases.filter(szbookcaseno__startswith=area)
-    cases = cases.order_by('szpretendindexnum')
+def check_cases(cases):
     pre_case = None
     current_case = None
     next_case = None
@@ -119,6 +108,17 @@ def main(prefix):
                                           next_case.szbookcaseno))
 #                print("'%s': '%s',\n" % (current_case.szbookcaseno,
 #                                         next_case.szbookcaseno))
+            else:
+                case_list.remove(int(current_case.szbookcaseno))
         pre_case = current_case
         current_case = next_case
     print(cases.count())
+
+
+def main(prefix):
+    area = "%06d" % prefix
+    cases = Bookcaseidinfo.objects.exclude(szfirstbookid__isnull=True)
+    cases = cases.exclude(szfirstbookid__exact='')
+    cases = cases.filter(szbookcaseno__startswith=area)
+    cases = cases.order_by('szpretendindexnum')
+    check_cases(cases)
