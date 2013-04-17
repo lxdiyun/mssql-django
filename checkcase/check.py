@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from checkcase.models import Bookcaseidinfo
+from checkcase.models import Bookcaseidinfo, Bookinfo
 
 
 def check_special(p, n):
@@ -96,7 +96,6 @@ def check_cases(cases):
     case_list = list(int(case.szbookcaseno) for case in cases)
     error_list = list()
     for case in cases:
-#        print(case.szbookcaseno)
         next_case = case
         if current_case:
             if not check_case(current_case, next_case, case_list):
@@ -108,7 +107,6 @@ def check_cases(cases):
                 case_list.remove(int(current_case.szbookcaseno))
         pre_case = current_case
         current_case = next_case
-    print(cases.count())
     return {"error_list": error_list, "count": cases.count()}
 
 
@@ -124,12 +122,17 @@ def check_area(area_prefix):
 def main(area):
     error_dict = check_area(area)
     print(error_dict['count'])
-#                if pre_case:
-#                    pre_case_no = pre_case.szbookcaseno
-#                else:
-#                    pre_case_no = None
-#                print("%s <= %s => %s" % (pre_case_no,
-#                                          current_case.szbookcaseno,
-#                                          next_case.szbookcaseno))
-#                print("'%s': '%s',\n" % (current_case.szbookcaseno,
-#                                         next_case.szbookcaseno))
+
+    for error_case in error_dict['error_list']:
+        pre_case = error_case["pre"]
+        current_case = error_case["cur"]
+        next_case = error_case["next"]
+        if pre_case:
+            pre_case_no = pre_case.szbookcaseno
+            print("%s <= %s => %s" % (pre_case_no,
+                                      current_case.szbookcaseno,
+                                      next_case.szbookcaseno))
+#            print("'%s': '%s',\n" % (current_case.szbookcaseno,
+#                                     next_case.szbookcaseno))
+        else:
+            pre_case_no = None
