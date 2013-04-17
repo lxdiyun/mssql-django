@@ -1,6 +1,7 @@
 {% extends "checkcase/base.html" %}
 
 {% block content %}
+<h3>{{ area_string }}</h3>
 <table class="table table-striped">
 	<thead>
 		<tr>
@@ -14,9 +15,9 @@
 		{% for case in error_list %}
 		<tr>   
 			<td >{{ forloop.counter }}</td>   
-			<td >{{ case.pre }} </td>     
-			<td >{{ case.cur }} </td>   
-			<td >{{ case.next }}</td>   
+			<td >{{ case.pre.translate }}<br>{{ case.pre }}</td>     
+			<td >{{ case.cur.translate }}<br>{{ case.cur }}</td>   
+			<td >{{ case.next.translate }}<br>{{ case.next }}</td>   
 		</tr>    
 		{% endfor %}
 	</tbody>
