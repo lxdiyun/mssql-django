@@ -13,7 +13,7 @@
 		{% for area, info in area_list.items %}
 		<tr>   
 			<td>{{ area }}</td>     
-			<td><a class="btn-link" href="{% url "check_area" area %}">{{ info.0 }}</a></td>     
+			<td><a class="btn-link" target="_blank" href="{% url "check_area" area %}">{{ info.0 }}</a></td>     
 			<td>{{ info.1 }}</td>     
 		</tr>    
 		{% endfor %}

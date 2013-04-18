@@ -18,15 +18,18 @@
 			<td>{{ forloop.counter }}</td>   
 			<td>
 				{{ case.pre.translate }}:{{ case.pre }}<br>
-				{{ case.pre.szfirstbookid }}:{{ case.pre.szpretendindexnum }}
+				<a class="btn-link" target="_blank" href="{% url 'book_detail' case.pre.szfirstbookid%} ">{{ case.pre.szfirstbookid }}</a>
+				:{{ case.pre.szpretendindexnum }}
 			</td>     
 			<td>
 				{{ case.cur.translate }}:{{ case.cur }}<br>
-				{{ case.cur.szfirstbookid }}:{{ case.cur.szpretendindexnum }}
+				<a class="btn-link" target="_blank" href="{% url 'book_detail' case.cur.szfirstbookid%} ">{{ case.cur.szfirstbookid }}</a>
+				:{{ case.cur.szpretendindexnum }}
 			</td>   
 			<td>
 				{{ case.next.translate }}:{{ case.next }}<br>
-				{{ case.cur.szfirstbookid }}:{{ case.cur.szpretendindexnum }}
+				<a class="btn-link" target="_blank" href="{% url 'book_detail' case.next.szfirstbookid%} ">{{ case.next.szfirstbookid }}</a>
+				:{{ case.next.szpretendindexnum }}
 			</td>
 		</tr>    
 		{% endfor %}

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from checkcase.models import Bookcaseidinfo, Bookinfo
+from checkcase.models import Bookcaseidinfo
 
 
 def check_special(p, n):

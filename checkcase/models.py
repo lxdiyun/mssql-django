@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from utils import AREA_DICT
+from urllib import quote
 
 
 class Bookcaseidinfo(models.Model):
@@ -148,3 +150,29 @@ class Bookinfo(models.Model):
 
     class Meta:
         db_table = 'BookInfo'
+
+    def get_case_info(self):
+        global AREA_DICT
+        info = ""
+        area = int(self.szbookcaseno[:6])
+        row_no = int(self.szbookcaseno[6:9])
+        line_no = int(self.szbookcaseno[9:-2])
+        layer_no = int(self.szbookcaseno[-2:])
+
+        if area in AREA_DICT:
+            info += AREA_DICT[area][0]
+
+        if 999 == row_no:
+            info += u"壁面架%d列%d层" % (line_no, layer_no)
+        else:
+            info += u"%d排%d列%d层" % (row_no, line_no, layer_no)
+
+        return info
+
+    def get_search_url(self):
+        url = ("http://202.192.155.48:83/opac/searchresult.aspx?"
+               "callno_f=%s"
+               "&dt=ALL&cl=ALL&dp=20&sf=M_PUB_YEAR"
+               "&ob=DESC&sm=table&dept=ALL&st=2&ecx=0&efz=0")
+
+        return url % quote(self.szbookindex.encode("gb18030", 'replace'))
