@@ -2,7 +2,7 @@
 
 {% block content %}
 <h3>{{ area_string }}</h3>
-<h5>总共：{{ count }}架</h5>
+<h5>总共：{{ count }}层架</h5>
 <table class="table table-striped">
 	<thead>
 		<tr>
@@ -17,9 +17,11 @@
 		<tr>   
 			<td>{{ forloop.counter }}</td>   
 			<td>
+				{% if case.pre %}
 				{{ case.pre.translate }}:{{ case.pre }}<br>
 				<a class="btn-link" target="_blank" href="{% url 'book_detail' case.pre.szfirstbookid%} ">{{ case.pre.szfirstbookid }}</a>
 				:{{ case.pre.szpretendindexnum }}
+				{% endif %}
 			</td>     
 			<td>
 				{{ case.cur.translate }}:{{ case.cur }}<br>
