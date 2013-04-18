@@ -8,7 +8,7 @@ urlpatterns = patterns('',
                        url(r'^(?P<area>\d+)$',
                            CheckAreaView.as_view(),
                            name="check_area"),
-                       url(r'^/book/(?P<bookid>\d+)$',
+                       url(r'^book/(?P<bookid>\d+)$',
                            BookDetailView.as_view(),
                            name="book_detail"),
                        )

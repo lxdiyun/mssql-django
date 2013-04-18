@@ -8,6 +8,7 @@
 <p><strong>层架信息：</strong>{{ book.get_case_info }}</p>
 <p><strong>所属层架编号：</strong>{{ book.szbookcaseno }}</p>
 <p><strong>是否强制定位：</strong>{% ifequal 1 book.bforcesortcase %}是{% else %}否{% endifequal %}</p>
+<p><strong>注册日期：</strong>{{ book.dtconvertdate }}</p>
 <p><strong>作者：</strong>{{ book.szauthor }}</p>
 <a class="btn-link" target="_blank" href="{{ book.get_search_url }}">在图书馆中查找该书<i class="icon-hand-right"></i></a>
 {% endblock content %}

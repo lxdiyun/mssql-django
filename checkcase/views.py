@@ -36,7 +36,12 @@ class BookDetailView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(BookDetailView, self).get_context_data(**kwargs)
         bookid = kwargs['bookid']
-        book = Bookinfo.objects.get(szbookid=bookid)
+        book = None
+        try:
+            book = Bookinfo.objects.get(szbookid=bookid)
+        except Bookinfo.DoesNotExist:
+            book = {'szname': "Not exist"}
+
         context['book'] = book
 
         return context
