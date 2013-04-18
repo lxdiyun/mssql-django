@@ -2,6 +2,7 @@
 from django.db import models
 from utils import AREA_DICT
 from urllib import quote
+from re import sub
 
 
 class Bookcaseidinfo(models.Model):
@@ -174,5 +175,8 @@ class Bookinfo(models.Model):
                "callno_f=%s"
                "&dt=ALL&cl=ALL&dp=20&sf=M_PUB_YEAR"
                "&ob=DESC&sm=table&dept=ALL&st=2&ecx=0&efz=0")
+        callno = sub("([^/]*)/([^/]*)(/.*)?$",
+                     "\g<1>/\g<2>",
+                     self.szbookindex)
 
-        return url % quote(self.szbookindex.encode("gb18030", 'replace'))
+        return url % quote(callno.encode("gb18030", 'replace'))
