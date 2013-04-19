@@ -1,0 +1,49 @@
+{% extends "checkcase/base.html" %}
+
+{% block content %}
+<h3>{{ area_string }}</h3>
+<h5>总共：{{ count }}架</h5>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>层架信息</th>
+			<th>首本书信息</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for case in all_cases %}
+		<tr class="{% if case.is_error %}error{% endif %}">   
+			<td>{{ forloop.counter }}</td>   
+			<td>
+				{{ case.translate }}<br>
+				{{ case.szbookcaseno }}<br>
+				{{ case.szfirstbookid }}<br>
+				{{ case.szpretendindexnum }}
+			</td>     
+			<td>
+				{% with case.book as book %}
+				{% if book %}
+				<a class="btn-link" target="_blank" href="{% url 'book_detail' book.szbookid %}">
+					{{ book.szname }}
+				</a>
+				<br>
+				{% if book.bforcesortcase %}<strong>[强制定位]</strong>{% endif %}
+				{{ book.get_case_info }}: {{ book.szbookcaseno }}
+				<br>
+				{{ book.szbookid }}
+				<br>
+				<a class="btn-link" target="_blank" href="{{ book.get_search_url }}">
+					<i class="icon-hand-right"></i>
+					{{ book.szbookindex }}
+				</a>
+				:{{ book.szpretendindexnum }}
+				{% endif %}
+				{% endwith %}
+			</td>   
+		</tr>    
+		{% endfor %}
+	</tbody>
+</table>
+
+{% endblock content %}

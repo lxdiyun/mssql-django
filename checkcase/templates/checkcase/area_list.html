@@ -12,8 +12,11 @@
 	<tbody>
 		{% for area, info in area_list.items %}
 		<tr>   
-			<td>{{ area }}</td>     
-			<td><a class="btn-link" target="_blank" href="{% url "check_area" area %}">{{ info.0 }}</a></td>     
+			<td>
+				{{ area }}
+				<a target="_blank" href="{% url "area_list_all_cases" area %}"><i class="icon-search"></i></a>
+			</td>     
+			<td><a class="btn-link" target="_blank" href="{% url "area_check" area %}">{{ info.0 }}</a></td>     
 			<td>{{ info.1 }}</td>     
 		</tr>    
 		{% endfor %}
