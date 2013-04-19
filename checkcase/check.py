@@ -51,27 +51,39 @@ def check_line_change(p, n, case_list):
     return False
 
 
-def check_line_change_999(p, n, case_list):
+def check_row_change(p, n, case_list):
+    p_no = int(p.szbookcaseno)
+    n_no = int(n.szbookcaseno)
+    p_row_no = int(p.szbookcaseno[6:9])
+    n_row_no = int(n.szbookcaseno[6:9])
+    p_line_no = int(p.szbookcaseno[-4:-2])
+    n_line_no = int(n.szbookcaseno[-4:-2])
+
+    if ((p_no + 1) not in case_list) and ((n_no - 1) not in case_list):
+        if p_line_no == n_line_no:
+            if 1 == abs(p_row_no - n_row_no):
+                return True
+
+    return False
+
+
+def check_row_change_999(p, n, case_list):
     p_no = int(p.szbookcaseno)
     n_no = int(n.szbookcaseno)
     p_row_no = int(p.szbookcaseno[6:9])
     n_row_no = int(n.szbookcaseno[6:9])
 
-    if (n_no - 1) not in case_list:
-        if (p_no + 1) not in case_list:
-            if 999 == n_row_no and 999 != p_row_no:
-                return True
-            elif 999 == p_row_no and 999 != n_row_no:
-                return True
+    if ((n_no - 1) not in case_list) and ((p_no + 1) not in case_list):
+        if 999 == n_row_no and 999 != p_row_no:
+            return True
+        elif 999 == p_row_no and 999 != n_row_no:
+            return True
 
     return False
 
 
 def check_case(p, n, case_list):
     p_no = int(p.szbookcaseno)
-    n_no = int(n.szbookcaseno)
-    p_row_no = int(p.szbookcaseno[6:9])
-    n_row_no = int(n.szbookcaseno[6:9])
     n_no = int(n.szbookcaseno)
 
     # 层变换
@@ -83,12 +95,11 @@ def check_case(p, n, case_list):
         return True
 
     # 排变换
-    if n_row_no != p_row_no:
-        if ((1 == abs(p_row_no - n_row_no)) and (n_no - 1) not in case_list):
-            return True
+    if check_row_change(p, n, case_list):
+        return True
 
     # 壁面架变化
-    if check_line_change_999(p, n, case_list):
+    if check_row_change_999(p, n, case_list):
         return True
 
 #    prin(p_row_no, m_row_no, m_layer_no)
