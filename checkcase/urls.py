@@ -1,13 +1,20 @@
 from django.conf.urls import patterns, url
-from views import CheckAreaView, AreaListView, BookDetailView
+from views import (AreaCheckView,
+                   AreaListAllCasesView,
+                   AreaListView,
+                   BookDetailView
+                   )
 
 urlpatterns = patterns('',
                        url(r'^$',
                            AreaListView.as_view(),
-                           name="are_list"),
+                           name="area_list"),
                        url(r'^(?P<area>\d+)$',
-                           CheckAreaView.as_view(),
-                           name="check_area"),
+                           AreaCheckView.as_view(),
+                           name="area_check"),
+                       url(r'^all/(?P<area>\d+)$',
+                           AreaListAllCasesView.as_view(),
+                           name="area_list_all_cases"),
                        url(r'^book/(?P<bookid>\d+)$',
                            BookDetailView.as_view(),
                            name="book_detail"),

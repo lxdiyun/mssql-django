@@ -36,11 +36,14 @@ def check_line_change(p, n, case_list):
     n_no = int(n.szbookcaseno)
     p_line_no = int(p.szbookcaseno[-4:-2])
     n_line_no = int(n.szbookcaseno[-4:-2])
+    p_row_no = int(p.szbookcaseno[6:9])
+    n_row_no = int(n.szbookcaseno[6:9])
 
     if (n_no - 1) not in case_list:
         if (p_no + 1) not in case_list:
             if 1 == abs(n_line_no - p_line_no):
-                return True
+                if p_row_no == n_row_no:
+                    return True
 
     return False
 
@@ -81,7 +84,7 @@ def check_case(p, n, case_list):
         if ((1 == abs(p_row_no - n_row_no)) and (n_no - 1) not in case_list):
             return True
 
-    # 壁面价变化
+    # 壁面架变化
     if check_line_change_999(p, n, case_list):
         return True
 
@@ -93,21 +96,27 @@ def check_cases(cases):
     pre_case = None
     current_case = None
     next_case = None
-    case_list = list(int(case.szbookcaseno) for case in cases)
+    case_id_list = list(int(case.szbookcaseno) for case in cases)
     error_list = list()
     for case in cases:
         next_case = case
         if current_case:
-            if not check_case(current_case, next_case, case_list):
+            if not check_case(current_case, next_case, case_id_list):
                 error_case = {"pre": pre_case,
                               "cur": current_case,
                               "next": next_case}
                 error_list.append(error_case)
+                case.is_error = True
             else:
-                case_list.remove(int(current_case.szbookcaseno))
+                case_id_list.remove(int(current_case.szbookcaseno))
         pre_case = current_case
         current_case = next_case
-    return {"error_list": error_list, "count": cases.count()}
+
+    return {
+        "error_list": error_list,
+        "count": cases.count(),
+        "all_cases": cases
+    }
 
 
 def check_area(area_prefix):
@@ -116,6 +125,7 @@ def check_area(area_prefix):
     cases = cases.exclude(szfirstbookid__exact='')
     cases = cases.filter(szbookcaseno__startswith=area)
     cases = cases.order_by('szpretendindexnum')
+
     return check_cases(cases)
 
 
