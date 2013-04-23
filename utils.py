@@ -28,3 +28,28 @@ AREA_DICT = {
     26: (u"二楼专题区", u""),
     27: (u"三楼专题区", u""),
 }
+
+
+def trans_case_no_without_area(case_no):
+        info = ""
+        row_no = int(case_no[6:9])
+        line_no = int(case_no[9:-2])
+        layer_no = int(case_no[-2:])
+
+        if 999 == row_no:
+            info += u"壁面架%d列%d层" % (line_no, layer_no)
+        else:
+            info += u"%d排%d列%d层" % (row_no, line_no, layer_no)
+
+        return info
+
+
+def trans_case_no(case_no):
+        global AREA_DICT
+        info = ""
+        area = int(case_no[:6])
+
+        if area in AREA_DICT:
+            info += AREA_DICT[area][0]
+
+        return info + trans_case_no_without_area(case_no)
