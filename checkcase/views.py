@@ -2,7 +2,7 @@ from django.views.generic import TemplateView
 from django.views.generic.base import ContextMixin
 from check import check_area
 from rfid.models import Bookinfo
-from utils import AREA_DICT
+from rfid.utils import AREA_DICT
 
 
 class AreaCheckBase(ContextMixin):

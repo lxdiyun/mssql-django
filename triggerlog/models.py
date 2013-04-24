@@ -1,5 +1,5 @@
 from django.db import models
-from utils import trans_case_no
+from rfid.utils import trans_case_no
 from re import search
 
 
