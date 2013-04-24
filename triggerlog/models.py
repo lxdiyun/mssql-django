@@ -22,12 +22,14 @@ class TriggerLog(models.Model):
         return self.state[:14]
 
     def get_before(self):
-        s = search("before:(\d+),", self.state)
-        return s.group(1)
+        result = search("before:(\d+),", self.state)
+        if result:
+            return result.group(1)
 
     def get_after(self):
-        s = search("after:(\d+)", self.state)
-        return s.group(1)
+        result = search("after:(\d+)", self.state)
+        if result:
+            return result.group(1)
 
     def translate_case_no(self):
         return trans_case_no(self.get_case_no())

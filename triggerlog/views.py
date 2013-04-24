@@ -9,6 +9,13 @@ class CaseFirstBookChangesView(ListView):
     context_object_name = 'logs'
 
     def get_queryset(self):
-        logs = list(TriggerLog.objects.filter(
-            tablename=self.table).order_by('time'))
-        return logs
+        logs = TriggerLog.objects.filter(tablename=self.table).order_by('-time')
+        return list(logs)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            CaseFirstBookChangesView,
+            self
+        ).get_context_data(**kwargs)
+        context['request'] = self.request
+        return context

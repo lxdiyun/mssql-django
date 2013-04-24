@@ -2,7 +2,6 @@ from django.conf.urls import patterns, url
 from views import (AreaCheckView,
                    AreaListAllCasesView,
                    AreaListView,
-                   BookDetailView
                    )
 
 urlpatterns = patterns('',
@@ -15,7 +14,4 @@ urlpatterns = patterns('',
                        url(r'^all/(?P<area>\d+)$',
                            AreaListAllCasesView.as_view(),
                            name="area_list_all_cases"),
-                       url(r'^book/(?P<bookid>\d+)$',
-                           BookDetailView.as_view(),
-                           name="book_detail"),
                        )

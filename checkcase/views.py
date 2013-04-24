@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView
 from django.views.generic.base import ContextMixin
 from check import check_area
-from models import Bookinfo
+from rfid.models import Bookinfo
 from utils import AREA_DICT
 
 
@@ -46,22 +46,5 @@ class AreaListView(TemplateView):
         global AREA_DICT
         context = super(AreaListView, self).get_context_data(**kwargs)
         context["area_list"] = AREA_DICT
-
-        return context
-
-
-class BookDetailView(TemplateView):
-    template_name = "checkcase/book_detail.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(BookDetailView, self).get_context_data(**kwargs)
-        bookid = kwargs['bookid']
-        book = None
-        try:
-            book = Bookinfo.objects.get(szbookid=bookid)
-        except Bookinfo.DoesNotExist:
-            book = {'szname': "Not exist"}
-
-        context['book'] = book
 
         return context

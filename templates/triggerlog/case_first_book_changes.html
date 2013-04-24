@@ -1,0 +1,42 @@
+{% extends "site_base.html" %}
+{% load bootstrap_pagination %}
+
+{% block title %}RFID 层架首书变更日志{% endblock %}
+
+{% block content %}
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>层位代码</th>
+			<th>层位信息</th>
+			<th>主机</th>
+			<th>时间</th>
+			<th>变化前</th>
+			<th>变化后</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for log in logs %}
+		<tr>   
+			<td>{{ log.get_case_no }}</td>
+			<td>{{ log.translate_case_no }}</td>
+			<td>{{ log.hostname }}</td>
+			<td>{{ log.time }}</td>
+			<td>
+				{% if log.get_before %}
+				<a class="btn-link" target="_blank" href="{% url 'book_detail' log.get_before %} ">{{ log.get_before }}</a>
+				{% endif %}
+			</td>
+			<td>
+				{% if log.get_after %}
+				<a class="btn-link" target="_blank" href="{% url 'book_detail' log.get_after %} ">{{ log.get_after }}</a>
+				{% endif %}
+			</td>
+		</tr>    
+		{% endfor %}
+	</tbody>
+</table>
+{% if is_paginated %}
+{% bootstrap_paginate page_obj url_view_name='log_first_book_changes' range=10 %}
+{% endif %}
+{% endblock content %}
