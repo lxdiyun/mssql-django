@@ -114,6 +114,8 @@ def check_cases(cases):
     pre_case = None
     current_case = None
     next_case = None
+    error_count = 0
+    warning_count = 0
     case_id_list = list(int(case.szbookcaseno) for case in cases)
     error_list = list()
     book_id_list = list(case.szfirstbookid for case in cases)
@@ -127,6 +129,7 @@ def check_cases(cases):
             case.book = book_dict[case.szfirstbookid]
             if case.book.bforcesortcase:
                 case.is_warning = True
+                warning_count += 1
             if current_case:
                 if not check_case(current_case, next_case, case_id_list):
                     case.is_error = True
@@ -134,6 +137,7 @@ def check_cases(cases):
             case.is_error = True
 
         if case.is_error:
+            error_count += 1
             error_case = {"pre": pre_case,
                           "cur": current_case,
                           "next": next_case}
@@ -143,9 +147,13 @@ def check_cases(cases):
         pre_case = current_case
         current_case = next_case
 
+    print error_count, warning_count
+
     return {
         "error_list": error_list,
-        "count": cases.count(),
+        "total_count": cases.count(),
+        "error_count": error_count,
+        "warning_count": warning_count,
         "all_cases": cases
     }
 
