@@ -1,5 +1,7 @@
 {% extends "checkcase/base.html" %}
 
+{% load utils_extra %}
+
 {% block content %}
 <h3>{{ area_string }}</h3>
 <h5>总共：{{ count }}层架</h5>
@@ -13,26 +15,21 @@
 		</tr>
 	</thead>
 	<tbody>
-		{% for case in error_list %}
+		{% for triple in error_list %}
 		<tr>   
 			<td>{{ forloop.counter }}</td>   
+			{% for prefix in triple_prefix %}
+			{% with  triple|get_item:prefix as case %}
 			<td>
-				{% if case.pre %}
-				{{ case.pre.translate }}:{{ case.pre }}<br>
-				<a class="btn-link" target="_blank" href="{% url 'book_detail' case.pre.szfirstbookid%} ">{{ case.pre.szfirstbookid }}</a>
-				:{{ case.pre.szpretendindexnum }}
+				{% if case %}
+				{{ case.translate }}:{{ case }}<br>
+				<a class="btn-link" target="_blank" href="{% url 'book_detail' case.szfirstbookid%} ">{{ case.szfirstbookid }}</a>
+				:{{ case.book.szbookindex|default:"Not Exist!!" }}<br>
+				{{ case.szpretendindexnum }}
 				{% endif %}
 			</td>     
-			<td>
-				{{ case.cur.translate }}:{{ case.cur }}<br>
-				<a class="btn-link" target="_blank" href="{% url 'book_detail' case.cur.szfirstbookid%} ">{{ case.cur.szfirstbookid }}</a>
-				:{{ case.cur.szpretendindexnum }}
-			</td>   
-			<td>
-				{{ case.next.translate }}:{{ case.next }}<br>
-				<a class="btn-link" target="_blank" href="{% url 'book_detail' case.next.szfirstbookid%} ">{{ case.next.szfirstbookid }}</a>
-				:{{ case.next.szpretendindexnum }}
-			</td>
+			{% endwith %}
+			{% endfor %}
 		</tr>    
 		{% endfor %}
 	</tbody>

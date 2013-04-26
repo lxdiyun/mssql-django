@@ -3,6 +3,7 @@ from utils import trans_case_no
 from urllib import quote
 from re import sub
 
+
 class Bookinfo(models.Model):
     nlabelid = models.TextField(db_column='nLabelID', blank=True)
     nepcorder = models.IntegerField(null=True,

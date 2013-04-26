@@ -13,8 +13,14 @@
 	</thead>
 	<tbody>
 		{% for case in all_cases %}
-		<tr class="{% if case.is_error %}error{% endif %}">   
-			<td>{{ forloop.counter }}</td>   
+		<tr class="
+			{% if case.is_error %}
+			error
+			{% elif case.is_warning %}
+			warning
+			{% endif %}
+			">   
+			<td>{{ forloop.counter }} {{ case.list_state }}</td>   
 			<td>
 				{{ case.translate }}<br>
 				{{ case.szbookcaseno }}<br>
@@ -38,6 +44,8 @@
 					{{ book.szbookindex }}
 				</a>
 				:{{ book.szpretendindexnum }}
+				{% else%}
+				<strong>Not Exist!<strong>
 				{% endif %}
 				{% endwith %}
 			</td>   

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from checkcase.models import Bookcaseidinfo
+from rfid.models import Bookinfo
 
 
 def check_special(p, n):
@@ -115,17 +116,30 @@ def check_cases(cases):
     next_case = None
     case_id_list = list(int(case.szbookcaseno) for case in cases)
     error_list = list()
+    book_id_list = list(case.szfirstbookid for case in cases)
+    books = list(Bookinfo.objects.filter(szbookid__in=book_id_list))
+    book_dict = dict((book.szbookid, book) for book in books)
+
     for case in cases:
         next_case = case
-        if current_case:
-            if not check_case(current_case, next_case, case_id_list):
-                error_case = {"pre": pre_case,
-                              "cur": current_case,
-                              "next": next_case}
-                error_list.append(error_case)
-                case.is_error = True
-            else:
-                case_id_list.remove(int(current_case.szbookcaseno))
+        case.is_error = False
+        if case.szfirstbookid in book_dict:
+            case.book = book_dict[case.szfirstbookid]
+            if case.book.bforcesortcase:
+                case.is_warning = True
+            if current_case:
+                if not check_case(current_case, next_case, case_id_list):
+                    case.is_error = True
+        else:
+            case.is_error = True
+
+        if case.is_error:
+            error_case = {"pre": pre_case,
+                          "cur": current_case,
+                          "next": next_case}
+            error_list.append(error_case)
+        else:
+            case_id_list.remove(int(case.szbookcaseno))
         pre_case = current_case
         current_case = next_case
 
