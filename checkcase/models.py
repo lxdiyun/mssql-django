@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from rfid.utils import trans_case_no_without_area
+from rfid.utils import trans_case_no
 
 
 class Bookcaseidinfo(models.Model):
@@ -44,4 +44,4 @@ class Bookcaseidinfo(models.Model):
         return self.szbookcaseno
 
     def translate(self):
-        return trans_case_no_without_area(self.szbookcaseno)
+        return trans_case_no(self.szbookcaseno)

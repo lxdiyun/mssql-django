@@ -1,9 +1,9 @@
 {% extends "site_base.html" %}
 
-{% block title %}RFID错架检测 -首书详细信息 - {{ area_string }}{% endblock title %}
+{% block title %}RFID错架检测 - 首书详细信息 - {{ list_title }}{% endblock title %}
 
 {% block content %}
-<h3>{{ area_string }}</h3>
+<h3>{{ list_title }}</h3>
 <h5>总共：{{ total_count }}层架</h5>
 <h5>错误：{{ error_count }}层架</h5>
 <h5>警告：{{ warning_count }}层架</h5>

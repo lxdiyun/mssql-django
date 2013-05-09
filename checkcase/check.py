@@ -121,6 +121,18 @@ def check_case(p, n, case_list):
     return check_special(p, n)
 
 
+# we need this function cause sqlserver 2005 has 2100 parameters limits
+def get_books(book_id_list):
+    index = 0
+    books = list()
+    while index < len(book_id_list):
+        books += Bookinfo.objects.filter(
+            szbookid__in=book_id_list[index:index+2000])
+        index += 2000
+
+    return books
+
+
 def check_cases(cases):
     pre_case = None
     current_case = None
@@ -130,7 +142,7 @@ def check_cases(cases):
     case_id_list = list(int(case.szbookcaseno) for case in cases)
     error_list = list()
     book_id_list = list(case.szfirstbookid for case in cases)
-    books = list(Bookinfo.objects.filter(szbookid__in=book_id_list))
+    books = get_books(book_id_list)
     book_dict = dict((book.szbookid, book) for book in books)
 
     for case in cases:
@@ -182,6 +194,16 @@ def check_area(area_prefix):
     cases = Bookcaseidinfo.objects.exclude(szfirstbookid__isnull=True)
     cases = cases.exclude(szfirstbookid__exact='')
     cases = cases.filter(szbookcaseno__startswith=area)
+    cases = cases.order_by('szpretendindexnum')
+
+    return check_cases(cases)
+
+
+def check_catalog(catalog_prefix):
+    cases = Bookcaseidinfo.objects.all()
+    cases = Bookcaseidinfo.objects.exclude(szfirstbookid__isnull=True)
+    cases = cases.exclude(szfirstbookid__exact='')
+    cases = cases.filter(szpretendindexnum__startswith=catalog_prefix)
     cases = cases.order_by('szpretendindexnum')
 
     return check_cases(cases)

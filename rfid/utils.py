@@ -30,6 +30,31 @@ AREA_DICT = {
     28: (u"一楼东区", u"期刊合订本"),
 }
 
+CATALOG_DICT = {
+    1: ("A", u"A"),
+    2: ("B", u"B"),
+    3: ("C", u"C"),
+    4: ("D", u"D"),
+    5: ("E", u"E"),
+    6: ("F", u"F"),
+    7: ("G", u"G"),
+    8: ("H", u"H"),
+    9: ("I", u"I"),
+    10: ("J", u"J"),
+    11: ("K", u"K"),
+    12: ("N", u"N"),
+    13: ("O", u"O"),
+    14: ("P", u"P"),
+    15: ("Q", u"Q"),
+    16: ("R", u"R"),
+    17: ("S", u"S"),
+    18: ("T", u"T"),
+    19: ("U", u"U"),
+    20: ("V", u"V"),
+    21: ("X", u"X"),
+    22: ("Z", u"Z"),
+}
+
 
 def trans_case_no_without_area(case_no):
         info = ""
@@ -39,6 +64,8 @@ def trans_case_no_without_area(case_no):
 
         if 999 == row_no:
             info += u"壁面架%d列%d层" % (line_no, layer_no)
+        if 888 == row_no:
+            info += u"矮层架%d列%d层" % (line_no, layer_no)
         else:
             info += u"%d排%d列%d层" % (row_no, line_no, layer_no)
 

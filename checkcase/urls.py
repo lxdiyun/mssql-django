@@ -2,6 +2,9 @@ from django.conf.urls import patterns, url
 from views import (AreaCheckView,
                    AreaListAllCasesView,
                    AreaListView,
+                   CatalogCheckView,
+                   CatalogListAllCasesView,
+                   CatalogListView,
                    )
 
 urlpatterns = patterns('',
@@ -14,4 +17,13 @@ urlpatterns = patterns('',
                        url(r'^all/(?P<area>\d+)$',
                            AreaListAllCasesView.as_view(),
                            name="area_list_all_cases"),
+                       url(r'^catalog$',
+                           CatalogListView.as_view(),
+                           name="catalog_list"),
+                       url(r'^catalog/error/(?P<catalog>\d+)$',
+                           CatalogCheckView.as_view(),
+                           name="catalog_check"),
+                       url(r'^catalog/detail/(?P<catalog>\d+)$',
+                           CatalogListAllCasesView.as_view(),
+                           name="catalog_list_all_cases"),
                        )
