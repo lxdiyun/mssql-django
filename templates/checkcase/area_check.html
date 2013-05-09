@@ -1,6 +1,8 @@
-{% extends "checkcase/base.html" %}
+{% extends "site_base.html" %}
 
 {% load utils_extra %}
+
+{% block title %}RFID错架检测 - {{ area_string }}{% endblock title %}
 
 {% block content %}
 <h3>{{ area_string }}</h3>
