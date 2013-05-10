@@ -1,6 +1,6 @@
 {% extends "site_base.html" %}
 
-{% block title %}RFID错架检测 - 区域列表{% endblock title %}
+{% block title %}RFID首书错架检测 - 区域列表{% endblock title %}
 
 {% block content %}
 <table class="table table-striped">
@@ -16,9 +16,9 @@
 		<tr>   
 			<td>
 				{{ area }}
-				<a target="_blank" href="{% url "area_list_all_cases" area %}"><i class="icon-search"></i></a>
+				<a target="_blank" href="{% url "area_detial" area %}"><i class="icon-search"></i></a>
 			</td>     
-			<td><a class="btn-link" target="_blank" href="{% url "area_check" area %}">{{ info.0 }}</a></td>     
+			<td><a class="btn-link" target="_blank" href="{% url "area_detial_error_only" area %}">{{ info.0 }}</a></td>     
 			<td>{{ info.1 }}</td>     
 		</tr>    
 		{% endfor %}

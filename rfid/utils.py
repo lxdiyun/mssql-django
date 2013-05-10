@@ -64,7 +64,7 @@ def trans_case_no_without_area(case_no):
 
         if 999 == row_no:
             info += u"壁面架%d列%d层" % (line_no, layer_no)
-        if 888 == row_no:
+        elif 888 == row_no:
             info += u"矮层架%d列%d层" % (line_no, layer_no)
         else:
             info += u"%d排%d列%d层" % (row_no, line_no, layer_no)

@@ -1062,7 +1062,7 @@ input.span1, textarea.span1 {
 .control-group-error label,
 .control-group-error .help-block,
 .control-group-error .help-inline {
-  color: #b94a48;
+  color: #FF0000;
 }
 .control-group-error * label {
   color: inherit;
