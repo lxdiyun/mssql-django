@@ -22,6 +22,10 @@
 			error
 			{% elif case.is_warning %}
 			warning
+			{% elif case.is_info %}
+			info
+			{% elif case.is_success %}
+			success
 			{% endif %}
 			">   
 			<td>{{ forloop.counter }} {{ case.list_state }}</td>   

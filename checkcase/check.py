@@ -50,6 +50,8 @@ def check_special(p, n):
     key = p.szbookcaseno
     if key in special:
         if n.szbookcaseno == special[key]:
+            p.is_success = True
+            n.is_success = True
             return True
 
     return False
@@ -106,6 +108,8 @@ def check_row_change_999(p, n, case_list):
 def check_case(p, n, case_list):
     p_no = int(p.szbookcaseno)
     n_no = int(n.szbookcaseno)
+    p_area_no = int(p.szbookcaseno[:6])
+    n_area_no = int(n.szbookcaseno[:6])
 
     # 层变换
     if 1 == (n_no - p_no):
@@ -122,6 +126,11 @@ def check_case(p, n, case_list):
     # 壁面架变化
     if check_row_change_999(p, n, case_list):
         return True
+
+    # 区域变换
+    if p_area_no != n_area_no:
+        p.is_info = True
+        n.is_info = True
 
 #    prin(p_row_no, m_row_no, m_layer_no)
     return check_special(p, n)
