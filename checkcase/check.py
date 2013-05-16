@@ -132,6 +132,10 @@ def check_case(p, n, case_list):
         p.is_info = True
         n.is_info = True
 
+    # 首书重复
+    if p.szfirstbookid == n.szfirstbookid:
+        return False
+
 #    prin(p_row_no, m_row_no, m_layer_no)
     return check_special(p, n)
 
