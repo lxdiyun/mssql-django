@@ -6,6 +6,7 @@ from re import sub
 def sort_books(case_no, start_index, end_index):
     # clean up old books
     books = Bookinfo.objects.all()
+    books = books.filter(bforcesortcase = 0)
     books = books.filter(szbookcaseno = case_no)
 #    print('before: %d' % len(books))
     books.update(szbookcaseno = '')
