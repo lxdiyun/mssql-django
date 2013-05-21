@@ -36,8 +36,8 @@ def sort_cases(cases):
             
             start_index = pre_case.szpretendindexnum
             end_index = case.szpretendindexnum
-            start_prefix = sub(r'^(\d*[a-zA-Z]).*$', r'\g<1>', start_index)
-            end_prefix = sub(r'^(\d*[a-zA-Z]).*$', r'\g<1>', end_index)
+            start_prefix = sub(r'^(\d*[a-zA-Z]+).*$', r'\g<1>', start_index)
+            end_prefix = sub(r'^(\d*[a-zA-Z]+).*$', r'\g<1>', end_index)
             if start_prefix != end_prefix:
                 print('Error index %s' % case.szbookcaseno)
                 end_index = start_prefix + "{{{"
@@ -46,7 +46,7 @@ def sort_cases(cases):
 
         if count == total:
             start_index = case.szpretendindexnum
-            end_index = sub(r'^(\d*[a-zA-Z]).*$',
+            end_index = sub(r'^(\d*[a-zA-Z]+).*$',
                            r'\g<1>{{{',
                            case.szpretendindexnum)
             sort_books(case.szbookcaseno, start_index, end_index)
