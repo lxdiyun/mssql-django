@@ -14,8 +14,8 @@ DATABASES = {
         'ENGINE': 'sql_server.pyodbc',
         'HOST': '192.168.64.60',
         'NAME': 'STLibDBV2',
-        'USER': 'read_only',
-        'PASSWORD': 'only.read',
+        'USER': 'rfid_test',
+        'PASSWORD': 'test.rfid',
         'OPTIONS': {
             'driver': '/usr/lib/libtdsodbc.so',
             'dsn': 'odbc_rfid',
