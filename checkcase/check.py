@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from checkcase.models import Bookcaseidinfo
-from rfid.models import Bookinfo
+from rfid.models import Bookinfo, get_cases_by_catalog, get_cases_by_area
 
 
 def check_special(p, n):
@@ -210,21 +209,13 @@ def check_cases(cases):
 
 
 def check_area(area_prefix):
-    area = "%06d" % area_prefix
-    cases = Bookcaseidinfo.objects.exclude(szfirstbookid__isnull=True)
-    cases = cases.exclude(szfirstbookid__exact='')
-    cases = cases.filter(szbookcaseno__startswith=area)
-    cases = cases.order_by('szpretendindexnum')
+    cases = get_cases_by_area(area_prefix)
 
     return check_cases(cases)
 
 
 def check_catalog(catalog_prefix):
-    cases = Bookcaseidinfo.objects.all()
-    cases = Bookcaseidinfo.objects.exclude(szfirstbookid__isnull=True)
-    cases = cases.exclude(szfirstbookid__exact='')
-    cases = cases.filter(szpretendindexnum__startswith=catalog_prefix)
-    cases = cases.order_by('szpretendindexnum')
+    cases = get_cases_by_catalog(catalog_prefix)
 
     return check_cases(cases)
 

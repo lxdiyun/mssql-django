@@ -1,10 +1,9 @@
-from checkcase.models import Bookcaseidinfo
-from rfid.models import Bookinfo
+from rfid.models import Bookinfo, get_cases_by_catalog, get_cases_by_area
 from re import sub
 
 
 def sort_books(case_no, start_index, end_index):
-#    print(case_no, start_index, end_index)
+    #    print(case_no, start_index, end_index)
     # clean up old books
     books = Bookinfo.objects.all()
     books = books.filter(bforcesortcase=0)
@@ -34,19 +33,20 @@ def sort_cases(cases):
         if 1 < count:
             start_index = pre_case.szpretendindexnum
             end_index = case.szpretendindexnum
-            start_prefix = sub(r'^(\d*[a-zA-Z]+).*$', r'\g<1>', start_index)
-            end_prefix = sub(r'^(\d*[a-zA-Z]+).*$', r'\g<1>', end_index)
+            start_prefix = sub(r'^(\d*[a-zA-Z]).*$', r'\g<1>', start_index)
+            end_prefix = sub(r'^(\d*[a-zA-Z]).*$', r'\g<1>', end_index)
 
             if start_prefix != end_prefix:
                 print('Warning catalog change at %s ------------------'
                       % case.szbookcaseno)
+                end_index = start_prefix + "{{{"
 
             sort_books(pre_case.szbookcaseno, start_index, end_index)
 
         if count == total:
             start_index = case.szpretendindexnum
             end_index = sub(r'^(\d*[a-zA-Z]+).*$',
-                            r'\g<1>\\x453{{{',
+                            r'\g<1>{{{',
                             case.szpretendindexnum)
             sort_books(case.szbookcaseno, start_index, end_index)
 
@@ -55,20 +55,12 @@ def sort_cases(cases):
 
 
 def sort_area(area_prefix):
-    area = "%06d" % area_prefix
-    cases = Bookcaseidinfo.objects.exclude(szfirstbookid__isnull=True)
-    cases = cases.exclude(szfirstbookid__exact='')
-    cases = cases.filter(szbookcaseno__startswith=area)
-    cases = cases.order_by('szpretendindexnum')
+    cases = get_cases_by_area(area_prefix)
 
     sort_cases(cases)
 
 
 def sort_catalog(catalog_prefix):
-    cases = Bookcaseidinfo.objects.all()
-    cases = Bookcaseidinfo.objects.exclude(szfirstbookid__isnull=True)
-    cases = cases.exclude(szfirstbookid__exact='')
-    cases = cases.filter(szpretendindexnum__startswith=catalog_prefix)
-    cases = cases.order_by('szpretendindexnum')
+    cases = get_cases_by_catalog(catalog_prefix)
 
     sort_cases(cases)
