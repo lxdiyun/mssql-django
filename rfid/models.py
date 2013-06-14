@@ -115,6 +115,18 @@ class Bookinfo(models.Model):
 
         return url % quote(callno.encode("gb18030", 'replace'))
 
+    # we need this function cause sqlserver 2005 has 2100 parameters limits
+    @staticmethod
+    def get_books(book_id_list):
+        index = 0
+        books = list()
+        while index < len(book_id_list):
+            books += Bookinfo.objects.filter(
+                szbookid__in=book_id_list[index:index+2000])
+            index += 2000
+
+        return books
+
 
 class Bookcaseidinfo(models.Model):
     nbookcaseid = models.TextField(db_column='nBookCaseID', blank=True)
@@ -159,22 +171,22 @@ class Bookcaseidinfo(models.Model):
     def translate(self):
         return trans_case_no(self.szbookcaseno)
 
+    @staticmethod
+    def get_cases_by_catalog(catalog_prefix):
+        cases = Bookcaseidinfo.objects.all()
+        cases = Bookcaseidinfo.objects.exclude(szfirstbookid__isnull=True)
+        cases = cases.exclude(szfirstbookid__exact='')
+        cases = cases.filter(szpretendindexnum__startswith=catalog_prefix)
+        cases = cases.order_by('szpretendindexnum')
 
-def get_cases_by_catalog(catalog_prefix):
-    cases = Bookcaseidinfo.objects.all()
-    cases = Bookcaseidinfo.objects.exclude(szfirstbookid__isnull=True)
-    cases = cases.exclude(szfirstbookid__exact='')
-    cases = cases.filter(szpretendindexnum__startswith=catalog_prefix)
-    cases = cases.order_by('szpretendindexnum')
+        return cases
 
-    return cases
+    @staticmethod
+    def get_cases_by_area(area_prefix):
+        area = "%06d" % area_prefix
+        cases = Bookcaseidinfo.objects.exclude(szfirstbookid__isnull=True)
+        cases = cases.exclude(szfirstbookid__exact='')
+        cases = cases.filter(szbookcaseno__startswith=area)
+        cases = cases.order_by('szpretendindexnum')
 
-
-def get_cases_by_area(area_prefix):
-    area = "%06d" % area_prefix
-    cases = Bookcaseidinfo.objects.exclude(szfirstbookid__isnull=True)
-    cases = cases.exclude(szfirstbookid__exact='')
-    cases = cases.filter(szbookcaseno__startswith=area)
-    cases = cases.order_by('szpretendindexnum')
-
-    return cases
+        return cases

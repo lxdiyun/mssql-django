@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from rfid.models import Bookinfo, get_cases_by_catalog, get_cases_by_area
+from rfid.models import Bookinfo, Bookcaseidinfo
 
 
 def check_special(p, n):
@@ -140,18 +140,6 @@ def check_case(p, n, case_list):
     return check_special(p, n)
 
 
-# we need this function cause sqlserver 2005 has 2100 parameters limits
-def get_books(book_id_list):
-    index = 0
-    books = list()
-    while index < len(book_id_list):
-        books += Bookinfo.objects.filter(
-            szbookid__in=book_id_list[index:index+2000])
-        index += 2000
-
-    return books
-
-
 def check_cases(cases):
     pre_case = None
     current_case = None
@@ -161,7 +149,7 @@ def check_cases(cases):
     case_id_list = list(int(case.szbookcaseno) for case in cases)
     error_list = list()
     book_id_list = list(case.szfirstbookid for case in cases)
-    books = get_books(book_id_list)
+    books = Bookinfo.get_books(book_id_list)
     book_dict = dict((book.szbookid, book) for book in books)
 
     for case in cases:
@@ -197,8 +185,6 @@ def check_cases(cases):
         pre_case = current_case
         current_case = next_case
 
-    print error_count, warning_count
-
     return {
         "error_list": error_list,
         "total_count": cases.count(),
@@ -209,13 +195,13 @@ def check_cases(cases):
 
 
 def check_area(area_prefix):
-    cases = get_cases_by_area(area_prefix)
+    cases = Bookcaseidinfo.get_cases_by_area(area_prefix)
 
     return check_cases(cases)
 
 
 def check_catalog(catalog_prefix):
-    cases = get_cases_by_catalog(catalog_prefix)
+    cases = Bookcaseidinfo.get_cases_by_catalog(catalog_prefix)
 
     return check_cases(cases)
 

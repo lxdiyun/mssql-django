@@ -1,0 +1,55 @@
+{% extends "site_base.html" %}
+
+{% block title %}查询图书{% endblock title %}
+
+{% block content %}
+<form method="POST" action="{% url 'book_query' %}">
+	<fieldset>
+		<legend>查询图书信息</legend>
+		<label>条码号</label>
+		<textarea name="book_ssid_list" rows="8"></textarea>
+		<span class="help-block">使用换行或空格分隔条码号</span>
+		<button type="submit" class="btn">查询</button>
+	</fieldset>
+	{% csrf_token %}
+</form>
+{% if books %}
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>登录号</th>
+			<th>书名<br>作者</th>
+			<th>索书号<br>[伪索书号]</th>
+			<th>层架信息<br>[所属层架编号]</th>
+			<th>注册时间</th>
+			<th>强制定位</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for book in books%}
+		<tr>
+			<td >{{ forloop.counter }}</td>
+			<td >
+				<a class="btn-link" target="_blank" href="{% url 'book_detail' book.szbookid %}">
+					{{ book.szbookid }}
+				</a>
+			</td>
+			<td >{{ book.szname }}<br>{{ book.szauthor }}</td>
+			<td >
+				<a class="btn-link" target="_blank" href="{{ book.get_search_url }}">
+					<i class="icon-hand-right"></i>
+					{{ book.szbookindex }}
+				</a>
+				<br>
+				[{{ book.szpretendindexnum }}]
+			</td>
+			<td >{{ book.get_case_info }}<br>[{{ book.szbookcaseno }}]</td>
+			<td >{{ book.dtconvertdate }}</td>
+			<td >{% ifequal 1 book.bforcesortcase %}是{% else %}否{% endifequal %}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endif %}
+{% endblock content %}
