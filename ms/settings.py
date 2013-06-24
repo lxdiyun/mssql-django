@@ -18,7 +18,7 @@ DATABASES = {
         'PASSWORD': 'test.rfid',
         'OPTIONS': {
             'driver': '/usr/lib/libtdsodbc.so',
-            'dsn': 'odbc_rfid',
+            'dsn': 'odbc_sqlserver_55',
         },
 
     }
