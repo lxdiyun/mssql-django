@@ -19,9 +19,9 @@
 		<tr>
 			<th>#</th>
 			<th>登录号</th>
-			<th>书名<br>作者</th>
-			<th>索书号<br>[伪索书号]</th>
-			<th>层架信息<br>[所属层架编号]</th>
+			<th>书名 作者</th>
+			<th>索书号 [伪索书号]</th>
+			<th>层架信息 [所属层架编号]</th>
 			<th>注册时间</th>
 			<th>强制定位</th>
 		</tr>
@@ -35,16 +35,15 @@
 					{{ book.szbookid }}
 				</a>
 			</td>
-			<td >{{ book.szname }}<br>{{ book.szauthor }}</td>
+			<td >{{ book.szname }} {{ book.szauthor }}</td>
 			<td >
 				<a class="btn-link" target="_blank" href="{{ book.get_search_url }}">
 					<i class="icon-hand-right"></i>
 					{{ book.szbookindex }}
 				</a>
-				<br>
 				[{{ book.szpretendindexnum }}]
 			</td>
-			<td >{{ book.get_case_info }}<br>[{{ book.szbookcaseno }}]</td>
+			<td >{{ book.get_case_info }} [{{ book.szbookcaseno }}]</td>
 			<td >{{ book.dtconvertdate }}</td>
 			<td >{% ifequal 1 book.bforcesortcase %}是{% else %}否{% endifequal %}</td>
 		</tr>
