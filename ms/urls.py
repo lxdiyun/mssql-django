@@ -18,5 +18,6 @@ urlpatterns = patterns('',
                        # url(r'^admin/', include(admin.site.urls)),
                        url(r'^', include('rfid.urls')),
                        url(r'^checkcase/', include('checkcase.urls')),
+                       url(r'^checkbook/', include('checkbook.urls')),
                        url(r'^log/', include('triggerlog.urls')),
                        )
