@@ -5,38 +5,39 @@
 {% block title %}RFID首书错架检测 - {{ list_title }}{% endblock title %}
 
 {% block content %}
-<h3>{{ list_title }}</h3>
-<h5>总共：{{ total_count }}层架</h5>
-<h5>错误：{{ error_count }}层架</h5>
-<h5>警告：{{ warning_count }}层架</h5>
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th>#</th>
-			<th>上一层</th>
-			<th>中间层</th>
-			<th>下一层</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for triple in error_list %}
-		<tr>   
-			<td>{{ forloop.counter }}</td>   
-			{% for prefix in triple_prefix %}
-			{% with  triple|get_item:prefix as case %}
-			<td>
-				{% if case %}
-				{{ case.translate }}:{{ case }}<br>
-				<a class="btn-link" target="_blank" href="{% url 'book_detail' case.szfirstbookid%} ">{{ case.szfirstbookid }}</a>
-				:{{ case.book.szbookindex|default:"Not Exist!!" }}<br>
-				{{ case.szpretendindexnum }}
-				{% endif %}
-			</td>     
-			{% endwith %}
+<div class="container">
+	<h3>{{ list_title }}</h3>
+	<h5>总共：{{ total_count }}层架</h5>
+	<h5>错误：{{ error_count }}层架</h5>
+	<h5>警告：{{ warning_count }}层架</h5>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>上一层</th>
+				<th>中间层</th>
+				<th>下一层</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for triple in error_list %}
+			<tr>   
+				<td>{{ forloop.counter }}</td>   
+				{% for prefix in triple_prefix %}
+				{% with  triple|get_item:prefix as case %}
+				<td>
+					{% if case %}
+					{{ case.translate }}:{{ case }}<br>
+					<a class="btn-link" target="_blank" href="{% url 'book_detail' case.szfirstbookid%} ">{{ case.szfirstbookid }}</a>
+					:{{ case.book.szbookindex|default:"Not Exist!!" }}<br>
+					{{ case.szpretendindexnum }}
+					{% endif %}
+				</td>     
+				{% endwith %}
+				{% endfor %}
+			</tr>    
 			{% endfor %}
-		</tr>    
-		{% endfor %}
-	</tbody>
-</table>
-
+		</tbody>
+	</table>
+</div>
 {% endblock content %}

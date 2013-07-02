@@ -3,18 +3,19 @@
 {% block title %}RFID首书错架检测{% endblock title %}
 
 {% block content %}
-<h2>RFID首书错架检测</h2>
-<div class="row">
-	<div class="span6">
-		<div class="hero-unit">
-			<a href="{% url 'area_list' %}">区域首书错架检测</a>
+<div class="container">
+	<h2>RFID首书错架检测</h2>
+	<div class="row">
+		<div class="span6">
+			<div class="hero-unit">
+				<a href="{% url 'area_list' %}">区域首书错架检测</a>
+			</div>
 		</div>
-	</div>
-	<div class="span6">
-		<div class="hero-unit">
-			<a href="{% url 'catalog_list' %}">分类首书错架检测</a>
+		<div class="span6">
+			<div class="hero-unit">
+				<a href="{% url 'catalog_list' %}">分类首书错架检测</a>
+			</div>
 		</div>
 	</div>
 </div>
-
 {% endblock content %}

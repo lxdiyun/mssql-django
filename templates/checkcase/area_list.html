@@ -3,26 +3,27 @@
 {% block title %}RFID首书错架检测 - 区域列表{% endblock title %}
 
 {% block content %}
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th>区域代码</th>
-			<th>区域</th>
-			<th>书类</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for area, info in area_list.items %}
-		<tr>   
-			<td>
-				{{ area }}
-				<a target="_blank" href="{% url "area_detial" area %}"><i class="icon-search"></i></a>
-			</td>     
-			<td><a class="btn-link" target="_blank" href="{% url "area_detial_error_only" area %}">{{ info.0 }}</a></td>     
-			<td>{{ info.1 }}</td>     
-		</tr>    
-		{% endfor %}
-	</tbody>
-</table>
-
+<div class="container">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>区域代码</th>
+				<th>区域</th>
+				<th>书类</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for area, info in area_list.items %}
+			<tr>   
+				<td>
+					{{ area }}
+					<a target="_blank" href="{% url "area_detial" area %}"><i class="icon-search"></i></a>
+				</td>     
+				<td><a class="btn-link" target="_blank" href="{% url "area_detial_error_only" area %}">{{ info.0 }}</a></td>     
+				<td>{{ info.1 }}</td>     
+			</tr>    
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
 {% endblock content %}

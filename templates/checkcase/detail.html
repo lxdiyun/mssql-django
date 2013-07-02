@@ -3,63 +3,64 @@
 {% block title %}RFID首书错架检测 - 首书详细信息 - {{ list_title }}{% endblock title %}
 
 {% block content %}
-<h3>{{ list_title }}</h3>
-<h5>总共：{{ total_count }}层架</h5>
-<h5>错误：{{ error_count }}层架</h5>
-<h5>警告：{{ warning_count }}层架</h5>
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th>#</th>
-			<th>层架信息</th>
-			<th>首本书信息</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for case in all_cases %}
-		<tr class="
-			{% if case.is_error %}
-			error
-			{% elif case.is_warning %}
-			warning
-			{% elif case.is_info %}
-			info
-			{% elif case.is_success %}
-			success
-			{% endif %}
-			">   
-			<td>{{ forloop.counter }} {{ case.list_state }}</td>   
-			<td>
-				{{ case.translate }}<br>
-				{{ case.szbookcaseno }}<br>
-				{{ case.szfirstbookid }}<br>
-				{{ case.szpretendindexnum }}
-			</td>     
-			<td>
-				{% with case.book as book %}
-				{% if book %}
-				<a class="btn-link" target="_blank" href="{% url 'book_detail' book.szbookid %}">
-					{{ book.szname }}
-				</a>
-				<br>
-				{% if book.bforcesortcase %}<strong>[强制定位]</strong>{% endif %}
-				{{ book.get_case_info }}: {{ book.szbookcaseno }}
-				<br>
-				{{ book.szbookid }}
-				<br>
-				<a class="btn-link" target="_blank" href="{{ book.get_search_url }}">
-					<i class="icon-hand-right"></i>
-					{{ book.szbookindex }}
-				</a>
-				:{{ book.szpretendindexnum }}
-				{% else%}
-				<strong>Not Exist!<strong>
+<div class="container">
+	<h3>{{ list_title }}</h3>
+	<h5>总共：{{ total_count }}层架</h5>
+	<h5>错误：{{ error_count }}层架</h5>
+	<h5>警告：{{ warning_count }}层架</h5>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>层架信息</th>
+				<th>首本书信息</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for case in all_cases %}
+			<tr class="
+				{% if case.is_error %}
+				error
+				{% elif case.is_warning %}
+				warning
+				{% elif case.is_info %}
+				info
+				{% elif case.is_success %}
+				success
 				{% endif %}
-				{% endwith %}
-			</td>   
-		</tr>    
-		{% endfor %}
-	</tbody>
-</table>
-
-{% endblock content %}
+				">   
+				<td>{{ forloop.counter }} {{ case.list_state }}</td>   
+				<td>
+					{{ case.translate }}<br>
+					{{ case.szbookcaseno }}<br>
+					{{ case.szfirstbookid }}<br>
+					{{ case.szpretendindexnum }}
+				</td>     
+				<td>
+					{% with case.book as book %}
+					{% if book %}
+					<a class="btn-link" target="_blank" href="{% url 'book_detail' book.szbookid %}">
+						{{ book.szname }}
+					</a>
+					<br>
+					{% if book.bforcesortcase %}<strong>[强制定位]</strong>{% endif %}
+					{{ book.get_case_info }}: {{ book.szbookcaseno }}
+					<br>
+					{{ book.szbookid }}
+					<br>
+					<a class="btn-link" target="_blank" href="{{ book.get_search_url }}">
+						<i class="icon-hand-right"></i>
+						{{ book.szbookindex }}
+					</a>
+					:{{ book.szpretendindexnum }}
+					{% else%}
+					<strong>Not Exist!<strong>
+							{% endif %}
+							{% endwith %}
+						</td>   
+					</tr>    
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		{% endblock content %}

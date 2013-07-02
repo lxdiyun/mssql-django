@@ -3,26 +3,27 @@
 {% block title %}RFID首书错架检测 - 分类列表{% endblock title %}
 
 {% block content %}
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th>编号</th>
-			<th>书类</th>
-			<th>伪索书号前缀</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for catalog, info in catalog_list.items %}
-		<tr>   
-			<td>
-				{{ catalog }}
-				<a target="_blank" href="{% url "catalog_detail" catalog %}"><i class="icon-search"></i></a>
-			</td>     
-			<td><a class="btn-link" target="_blank" href="{% url "catalog_detail_error_only" catalog %}">{{ info.0 }}</a></td>     
-			<td>{{ info.1 }}</td>     
-		</tr>    
-		{% endfor %}
-	</tbody>
-</table>
-
+<div class="container">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>编号</th>
+				<th>书类</th>
+				<th>伪索书号前缀</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for catalog, info in catalog_list.items %}
+			<tr>   
+				<td>
+					{{ catalog }}
+					<a target="_blank" href="{% url "catalog_detail" catalog %}"><i class="icon-search"></i></a>
+				</td>     
+				<td><a class="btn-link" target="_blank" href="{% url "catalog_detail_error_only" catalog %}">{{ info.0 }}</a></td>     
+				<td>{{ info.1 }}</td>     
+			</tr>    
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
 {% endblock content %}
