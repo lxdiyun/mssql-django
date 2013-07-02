@@ -14,6 +14,12 @@
 		</fieldset>
 		{% csrf_token %}
 	</form>
+	{% if not_found %}
+	<strong>未找到的登录号:</strong>
+	{% for ssid in not_found %}
+	{{ ssid }}
+	{% endfor %}
+	{% endif %}
 	{% if books %}
 	<table class="table table-striped">
 		<thead>

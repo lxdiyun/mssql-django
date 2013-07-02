@@ -27,5 +27,11 @@ class BookQueryView(TemplateView):
         context = self.get_context_data(**kwargs)
         form = BookQueryForm(self.request.POST)
         if form.is_valid():
-            context['books'] = Bookinfo.get_books(form.get_ssid_list())
+            all_ssid = form.get_ssid_list()
+            books = Bookinfo.get_books(all_ssid)
+            context['books'] = books
+            founded_ssid = map(lambda book: book.szbookid, books)
+            not_founed_ssid = list(set(all_ssid) - set(founded_ssid))
+            context['not_found'] = not_founed_ssid
+
         return self.render_to_response(context)
