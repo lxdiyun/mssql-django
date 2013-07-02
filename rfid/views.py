@@ -35,3 +35,7 @@ class BookQueryView(TemplateView):
             context['not_found'] = not_founed_ssid
 
         return self.render_to_response(context)
+
+
+class IndexView(TemplateView):
+    template_name = "rfid/index.html"

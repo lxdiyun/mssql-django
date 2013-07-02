@@ -12,7 +12,7 @@ urlpatterns = patterns('',
                        url(r'^$',
                            TemplateView.as_view(
                                template_name="checkcase/index.html"),
-                           name="index"),
+                           name="checkcase_index"),
                        url(r'^area$',
                            AreaListView.as_view(),
                            name="area_list"),

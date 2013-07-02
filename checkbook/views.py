@@ -9,7 +9,7 @@ class BooksNoCaseView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(BooksNoCaseView, self).get_context_data(**kwargs)
-        context['subtitle'] = u"无层位信息"
+        context['subtitle'] = u"图书未上架"
         books = Bookinfo.objects.filter(Q(szbookcaseno__isnull=True)
                                         | Q(szbookcaseno=''))
         context['books'] = books
