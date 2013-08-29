@@ -187,7 +187,7 @@ def check_cases(cases):
 
     return {
         "error_list": error_list,
-        "total_count": cases.count(),
+        "total_count": len(cases),
         "error_count": error_count,
         "warning_count": warning_count,
         "all_cases": cases
@@ -196,6 +196,10 @@ def check_cases(cases):
 
 def check_area(area_prefix):
     cases = Bookcaseidinfo.get_cases_by_area(area_prefix)
+
+    # 外文伪索书号分类不需要区分前缀
+    if 1 == area_prefix:
+        cases = sorted(cases, key=lambda case: case.szpretendindexnum[4:])
 
     return check_cases(cases)
 
