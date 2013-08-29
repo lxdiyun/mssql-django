@@ -8,7 +8,7 @@
 		<fieldset>
 			<legend>查询图书信息</legend>
 			<label>条码号</label>
-			<textarea name="book_ssid_list" rows="8"></textarea>
+			<textarea name="book_ssid_list" rows="8">{{ book_ssid_list }}</textarea>
 			<span class="help-block">使用换行或空格分隔条码号</span>
 			<button type="submit" class="btn">查询</button>
 		</fieldset>
@@ -23,3 +23,18 @@
 	{% include "rfid/book_list_intra_table.html" %}
 </div>
 {% endblock content %}
+
+{% block extend_js %}
+
+/* Table initialisation */
+$(document).ready(function() {
+	$('#book_list_table').dataTable( {
+		"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+		"sPaginationType": "bootstrap",
+		"oLanguage": {
+			"sLengthMenu": "_MENU_ records per page"
+		}
+	} );
+} );
+
+{% endblock %}

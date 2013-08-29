@@ -33,6 +33,7 @@ class BookQueryView(TemplateView):
             founded_ssid = map(lambda book: book.szbookid, books)
             not_founed_ssid = list(set(all_ssid) - set(founded_ssid))
             context['not_found'] = not_founed_ssid
+            context['book_ssid_list'] = form.cleaned_data['book_ssid_list']
 
         return self.render_to_response(context)
 
