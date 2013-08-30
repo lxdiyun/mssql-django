@@ -1,4 +1,4 @@
-from rfid.models import Bookinfo, get_cases_by_catalog, get_cases_by_area
+from rfid.models import Bookinfo, Bookcaseidinfo
 from re import sub
 
 
@@ -55,12 +55,12 @@ def sort_cases(cases):
 
 
 def sort_area(area_prefix):
-    cases = get_cases_by_area(area_prefix)
+    cases = Bookcaseidinfo.get_cases_by_area(area_prefix)
 
     sort_cases(cases)
 
 
 def sort_catalog(catalog_prefix):
-    cases = get_cases_by_catalog(catalog_prefix)
+    cases = Bookcaseidinfo.get_cases_by_catalog(catalog_prefix)
 
     sort_cases(cases)
