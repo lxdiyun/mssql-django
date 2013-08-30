@@ -5,6 +5,8 @@ $(document).ready(function() {
 		"sPaginationType": "bootstrap",
 		"oLanguage": {
 			"sLengthMenu": "_MENU_ records per page"
-		}
+		},
+		"aLengthMenu": [[-1, 100, 50, 25, 10], ["All", 100, 50, 25, 10]],
+		"iDisplayLength" : -1
 	} );
 } );

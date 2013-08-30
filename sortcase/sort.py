@@ -20,7 +20,7 @@ def sort_books(case_no, start_index, end_index):
     books.update(szbookcaseno=case_no)
 
 
-def sort_cases(cases):
+def sort_cases(cases, across_catalog=False):
     count = 1
     total = len(cases)
     pre_case = None
@@ -36,7 +36,7 @@ def sort_cases(cases):
             start_prefix = sub(r'^(\d*[a-zA-Z]).*$', r'\g<1>', start_index)
             end_prefix = sub(r'^(\d*[a-zA-Z]).*$', r'\g<1>', end_index)
 
-            if start_prefix != end_prefix:
+            if (start_prefix != end_prefix) and (across_catalog is not True):
                 print('Warning catalog change at %s ------------------'
                       % case.szbookcaseno)
                 end_index = start_prefix + "{{{"
@@ -57,7 +57,10 @@ def sort_cases(cases):
 def sort_area(area_prefix):
     cases = Bookcaseidinfo.get_cases_by_area(area_prefix)
 
-    sort_cases(cases)
+    if 1 == area_prefix:
+        sort_cases(cases, across_catalog=True)
+    else:
+        sort_cases(cases)
 
 
 def sort_catalog(catalog_prefix):
