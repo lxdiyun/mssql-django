@@ -1,4 +1,3 @@
-
 {% extends "site_base.html" %}
 
 {% block title %}图书列表
@@ -17,3 +16,7 @@
 	{% include "rfid/book_list_intra_table.html" %}
 </div>
 {% endblock content %}
+
+{% block extend_js %}
+	{% include "rfid/book_list_intra_table.js" %}
+{% endblock %}
