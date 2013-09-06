@@ -16,7 +16,7 @@
 			{% for area, info in area_list.items %}
 			<tr>   
 				<td>
-					{{ area }}
+					{{ area|stringformat:"02d" }}
 					<a target="_blank" href="{% url "area_detial" area %}"><i class="icon-search"></i></a>
 				</td>     
 				<td><a class="btn-link" target="_blank" href="{% url "area_detial_error_only" area %}">{{ info.0 }}</a></td>     

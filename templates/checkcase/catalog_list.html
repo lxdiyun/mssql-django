@@ -16,7 +16,7 @@
 			{% for catalog, info in catalog_list.items %}
 			<tr>   
 				<td>
-					{{ catalog }}
+					{{ catalog|stringformat:"02d" }}
 					<a target="_blank" href="{% url "catalog_detail" catalog %}"><i class="icon-search"></i></a>
 					{% if info.0 in checked_catalog_list %}
 					<i class="icon-ok"></i>
