@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from rfid.models import Bookinfo, Bookcaseidinfo
 
-CHECKED_CATALOG_LIST = ['B', 'I', 'K', 'N', 'O']
+CHECKED_CATALOG_LIST = ['B', 'I', 'K', 'N', 'O', 'T',
+                        'TB', 'TD', 'TE', 'TF', 'TG', 'TH', 'TJ', 'TK', 'TL',
+                        'TM', 'TN', 'TP', 'TQ', 'TS', 'TU', 'TV', ]
 
 
 def check_special(p, n):

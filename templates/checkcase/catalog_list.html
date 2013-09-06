@@ -4,6 +4,7 @@
 
 {% block content %}
 <div class="container">
+	{{ checked_catalog_list }}
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -18,7 +19,7 @@
 				<td>
 					{{ catalog }}
 					<a target="_blank" href="{% url "catalog_detail" catalog %}"><i class="icon-search"></i></a>
-					{% if catalog in checked_catalog_list %}
+					{% if info.0 in checked_catalog_list %}
 					<i class="icon-ok"></i>
 					{% endif  %}
 				</td>     

@@ -66,6 +66,6 @@ class CatalogListView(TemplateView):
         global CATALOG_DICT
         context = super(CatalogListView, self).get_context_data(**kwargs)
         context["catalog_list"] = CATALOG_DICT
-        context["checked_catalog"] = CHECKED_CATALOG_LIST
+        context["checked_catalog_list"] = CHECKED_CATALOG_LIST
 
         return context
