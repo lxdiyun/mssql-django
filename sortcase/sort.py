@@ -48,6 +48,8 @@ def sort_cases(cases, across_catalog=False):
             end_index = sub(r'^(\d*[a-zA-Z]+).*$',
                             r'\g<1>{{{',
                             case.szpretendindexnum)
+            if "0113TD{{{" == end_index:
+                end_index = "0114TE{{{"
             sort_books(case.szbookcaseno, start_index, end_index)
 
         count += 1
