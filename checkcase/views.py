@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 from django.views.generic.base import ContextMixin
-from check import check_area, check_catalog
+from check import check_area, check_catalog, CHECKED_CATALOG_LIST
 from rfid.utils import AREA_DICT, CATALOG_DICT
 
 
@@ -66,5 +66,6 @@ class CatalogListView(TemplateView):
         global CATALOG_DICT
         context = super(CatalogListView, self).get_context_data(**kwargs)
         context["catalog_list"] = CATALOG_DICT
+        context["checked_catalog"] = CHECKED_CATALOG_LIST
 
         return context

@@ -18,6 +18,9 @@
 				<td>
 					{{ catalog }}
 					<a target="_blank" href="{% url "catalog_detail" catalog %}"><i class="icon-search"></i></a>
+					{% if catalog in checked_catalog_list %}
+					<i class="icon-ok"></i>
+					{% endif  %}
 				</td>     
 				<td><a class="btn-link" target="_blank" href="{% url "catalog_detail_error_only" catalog %}">{{ info.0 }}</a></td>     
 				<td>{{ info.1 }}</td>     
