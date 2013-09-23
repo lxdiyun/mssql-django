@@ -25,13 +25,6 @@ def check_special(p, n):
         '00001400700306': '00001400700901',
         '00001400800906': '00001400800301',
 
-        # 二楼南区 B 类 高层套书
-        '00001799901302': '00001799901202',
-        '00001799901202': '00001799901102',
-        '00001799901102': '00001799901002',
-        '00001799901002': '00001799900902',
-        '00001799900902': '00001799900802',
-        '00001799900802': '00001799900702',
         # 二楼东南区 B 类 楼梯间断
         '00001600101403': '00001600201401',
         '00001600201503': '00001600101501',
@@ -121,6 +114,10 @@ def check_case(p, n, case_list):
     p_area_no = int(p.szbookcaseno[:6])
     n_area_no = int(n.szbookcaseno[:6])
 
+    # 首书重复
+    if p.szfirstbookid == n.szfirstbookid:
+        return False
+
     # 层变换
     if 1 == (n_no - p_no):
         return True
@@ -141,10 +138,6 @@ def check_case(p, n, case_list):
     if p_area_no != n_area_no:
         p.is_info = True
         n.is_info = True
-
-    # 首书重复
-    if p.szfirstbookid == n.szfirstbookid:
-        return False
 
 #    prin(p_row_no, m_row_no, m_layer_no)
     return check_special(p, n)
