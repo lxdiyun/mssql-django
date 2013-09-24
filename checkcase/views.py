@@ -2,9 +2,12 @@ from django.views.generic import TemplateView
 from django.views.generic.base import ContextMixin
 from check import check_area, check_catalog, CHECKED_CATALOG_LIST
 from rfid.utils import AREA_DICT, CATALOG_DICT
+from django.core.urlresolvers import reverse
 
 
 class AreaDetailBase(ContextMixin):
+    view_name = ""
+
     def get_context_data(self, **kwargs):
         global AREA_DICT
         context = super(AreaDetailBase, self).get_context_data(**kwargs)
@@ -16,22 +19,24 @@ class AreaDetailBase(ContextMixin):
             context["triple_prefix"] = ['pre', 'cur', 'next']
 
             if area > 1:
-                context["has_pre"] = True
-                context["pre"] = area - 1
+                context["pre"] = reverse(self.view_name,
+                                         args=[area - 1])
 
             if area < len(AREA_DICT):
-                context["has_next"] = True
-                context["next"] = area + 1
+                context["next"] = reverse(self.view_name,
+                                          args=[area + 1])
 
         return context
 
 
 class AreaDetailErrorOnlyView(TemplateView, AreaDetailBase):
     template_name = "checkcase/detail_error_only.html"
+    view_name = "area_detial_error_only"
 
 
 class AreaDetailView(TemplateView, AreaDetailBase):
     template_name = "checkcase/detail.html"
+    view_name = "area_detial"
 
 
 class AreaListView(TemplateView):
@@ -46,8 +51,9 @@ class AreaListView(TemplateView):
 
 
 class CatalogDetailBase(ContextMixin):
+    view_name = ""
+
     def get_context_data(self, **kwargs):
-        global CATALOG_DICT
         context = super(CatalogDetailBase, self).get_context_data(**kwargs)
         catalog = int(kwargs['catalog'])
         if catalog in CATALOG_DICT:
@@ -56,24 +62,28 @@ class CatalogDetailBase(ContextMixin):
             context["list_title"] = CATALOG_DICT[catalog][0]
             context["triple_prefix"] = ['pre', 'cur', 'next']
 
-            if catalog > 1:
-                context["pre"] = catalog - 1
-
-            if catalog < len(CATALOG_DICT):
-                context["next"] = catalog + 1
-
             if CATALOG_DICT[catalog][2]:
                 context["static_total"] = CATALOG_DICT[catalog][2]
+
+            if catalog > 1:
+                context["pre"] = reverse(self.view_name,
+                                         args=[catalog - 1])
+
+            if catalog < len(CATALOG_DICT):
+                context["next"] = reverse(self.view_name,
+                                          args=[catalog + 1])
 
         return context
 
 
 class CatalogDetailErrorOnlyView(TemplateView, CatalogDetailBase):
     template_name = "checkcase/detail_error_only.html"
+    view_name = "catalog_detail_error_only"
 
 
 class CatalogDetailView(TemplateView, CatalogDetailBase):
     template_name = "checkcase/detail.html"
+    view_name = "catalog_detail"
 
 
 class CatalogListView(TemplateView):
