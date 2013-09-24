@@ -15,6 +15,14 @@ class AreaDetailBase(ContextMixin):
                                                AREA_DICT[area][1])
             context["triple_prefix"] = ['pre', 'cur', 'next']
 
+            if area > 1:
+                context["has_pre"] = True
+                context["pre"] = area - 1
+
+            if area < len(AREA_DICT):
+                context["has_next"] = True
+                context["next"] = area + 1
+
         return context
 
 
@@ -47,6 +55,15 @@ class CatalogDetailBase(ContextMixin):
             context.update(check_catalog(catalog_prefix))
             context["list_title"] = CATALOG_DICT[catalog][0]
             context["triple_prefix"] = ['pre', 'cur', 'next']
+
+            if catalog > 1:
+                context["pre"] = catalog - 1
+
+            if catalog < len(CATALOG_DICT):
+                context["next"] = catalog + 1
+
+            if CATALOG_DICT[catalog][2]:
+                context["static_total"] = CATALOG_DICT[catalog][2]
 
         return context
 

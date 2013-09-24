@@ -8,8 +8,19 @@
 <div class="container">
 	<h3>{{ list_title }}</h3>
 	<h5>总共：{{ total_count }}层架</h5>
+	{% if static_total %}
+	<h5>应有：{{ static_total }}层架</h5>
+	{% endif %}
 	<h5>错误：{{ error_count }}层架</h5>
 	<h5>警告：{{ warning_count }}层架</h5>
+	{% if pre %}
+	<a class="btn-link"  href="{% url 'area_detial_error_only' pre %} ">上一区</a>
+	{% endif %}
+	{% if next %}
+	<a class="btn-link"  href="{% url 'area_detial_error_only' next %} ">下一区</a>
+	{% endif %}
+
+
 	<table class="table table-striped">
 		<thead>
 			<tr>
