@@ -1,5 +1,6 @@
 from rfid.models import Bookinfo, Bookcaseidinfo
 from re import sub
+from rfid.utils import CATALOG_DICT
 
 
 def sort_books(case_no, start_index, end_index):
@@ -69,3 +70,8 @@ def sort_catalog(catalog_prefix):
     cases = Bookcaseidinfo.get_cases_by_catalog(catalog_prefix)
 
     sort_cases(cases)
+
+
+def sort_all_catalog():
+    for catalog in CATALOG_DICT.values():
+        sort_catalog(catalog[1])
