@@ -5,11 +5,15 @@
 {% block content %}
 <div class="container">
 	<h1>RFID 辅助信息</h1>
+	<h2>综合信息查询</h2>
 	<h3>
 		<a target="_blank" href="{% url 'area' %}">区域列表</a>
 	</h3>
 	<h3>
 		<a target="_blank" href="{% url 'catalog' %}">分类列表</a>
+	</h3>
+	<h3>
+		<a target="_blank" href="{% url 'book_query' %}">图书信息批量查询</a>
 	</h3>
 	<h2>首书错架检测</h2>
 	<h3>
@@ -28,8 +32,5 @@
 	<h3>
 		<a target="_blank" href="{% url 'books_short_index' %}">疑似简短数据</a>
 	</h3>
-	<h2>
-		<a target="_blank" href="{% url 'book_query' %}">图书批量信息查询</a>
-	</h2>
 </div>
 {% endblock content %}
