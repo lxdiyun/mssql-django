@@ -1,0 +1,34 @@
+{% extends "site_base.html" %}
+
+{% block title %}层架信息 {{ case.translate }}{% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+	<h2>{{ case.translate }} {{ case }}</h2>
+	<hr></hr>
+	{% if case.book %}
+	{% with case.book as book  %}
+	<p><strong>首书：</strong>{{ book.szname }}</a> </p>
+	<p><strong>首书登录号：</strong><a class="btn-link" target="_blank" href="{% url 'book_detail' book.szbookid%} ">{{ book.szbookid }}</a> </p>
+	<p><strong>首书所属层架信息：</strong>{{ book.get_case_info }}</p>
+	<p><strong>首书所属层架编号：</strong>{{ book.szbookcaseno }}</p>
+	<p><strong>首书索书号：</strong><a class="btn-link" target="_blank" href="{{ book.get_search_url }}">
+						<i class="icon-hand-right"></i>
+						{{ book.szbookindex|default:"Not Exist!!" }}
+					</a>
+	</p>
+	<p><strong>首书伪索书号：</strong>{{ book.szpretendindexnum|default:"Not Exist!!" }}</p>
+	{% endwith %}
+	{% endif %}
+	<hr></hr>
+	<p><strong>层位伪索书号：</strong>{{ case.szpretendindexnum }}</p>
+	<p><strong>最近更新时间：</strong>{{ case.dtlastordercase }}</p>
+	<p><strong>书本总数量：</strong>{{ total }}</p>
+	<p><strong>书本外借量：</strong>{{ borrowed }}</p>
+	{% include "rfid/book_list_intra_table.html" %}
+</div>
+{% endblock content %}
+
+{% block extend_js %}
+	{% include "rfid/book_list_intra_table.js" %}
+{% endblock %}

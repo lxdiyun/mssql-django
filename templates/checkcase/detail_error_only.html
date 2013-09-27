@@ -43,7 +43,7 @@
 				{% with  triple|get_item:prefix as case %}
 				<td>
 					{% if case %}
-					{{ case.translate }}:{{ case }}<br>
+					{{ case.translate }}:<a class="btn-link" target="_blank" href="{% url 'case_detail' case.szbookcaseno%} ">{{ case.szbookcaseno }}</a><br>
 					<a class="btn-link" target="_blank" href="{% url 'book_detail' case.szfirstbookid%} ">{{ case.szfirstbookid }}</a>
 					:{{ case.book.szbookindex|default:"Not Exist!!" }}<br>
 					{{ case.szpretendindexnum }}

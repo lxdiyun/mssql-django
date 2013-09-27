@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView
-from rfid.models import Bookinfo
+from rfid.models import Bookinfo, Bookcaseidinfo
 from rfid.forms import BookQueryForm
 
 
@@ -36,6 +36,35 @@ class BookQueryView(TemplateView):
             context['book_ssid_list'] = form.cleaned_data['book_ssid_list']
 
         return self.render_to_response(context)
+
+
+class CaseDetailView(TemplateView):
+    template_name = "rfid/case_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(CaseDetailView, self).get_context_data(**kwargs)
+        caseid = kwargs['caseid']
+        case = None
+        firstbook = None
+        books = None
+        try:
+            case = Bookcaseidinfo.objects.get(szbookcaseno=caseid)
+            books = Bookinfo.objects.filter(szbookcaseno=case.szbookcaseno)
+            firstbook = Bookinfo.objects.get(szbookid=case.szfirstbookid)
+            case.book = firstbook
+        except Bookcaseidinfo.DoesNotExist:
+            pass
+        except Bookinfo.DoesNotExist:
+            pass
+
+        context['case'] = case
+        if books:
+            context['books'] = books
+            context['total'] = len(books)
+            context['borrowed'] = len(filter(lambda b: b.nbookstatus != 1,
+                                             books))
+
+        return context
 
 
 class IndexView(TemplateView):

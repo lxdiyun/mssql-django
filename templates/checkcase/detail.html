@@ -48,7 +48,7 @@
 				<td>{{ forloop.counter }} {{ case.list_state }}</td>   
 				<td>
 					{{ case.translate }}<br>
-					{{ case.szbookcaseno }}<br>
+					<a class="btn-link" target="_blank" href="{% url 'case_detail' case.szbookcaseno%} ">{{ case.szbookcaseno }}</a><br>
 					{{ case.szfirstbookid }}<br>
 					{{ case.szpretendindexnum }}
 				</td>     
@@ -60,7 +60,7 @@
 					</a>
 					<br>
 					{% if book.bforcesortcase %}<strong>[强制定位]</strong>{% endif %}
-					{{ book.get_case_info }}: {{ book.szbookcaseno }}
+					{{ book.get_case_info }}: <a class="btn-link" target="_blank" href="{% url 'case_detail' book.szbookcaseno%} ">{{ book.szbookcaseno }}</a>
 					<br>
 					{{ book.szbookid }}
 					<br>

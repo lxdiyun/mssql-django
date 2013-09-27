@@ -13,11 +13,12 @@
 			<th>所属层架编号</th>
 			<th>注册时间</th>
 			<th>强制定位</th>
+			<th>外借</th>
 		</tr>
 	</thead>
 	<tbody>
 		{% for book in books%}
-		<tr>
+		<tr {% if book.nbookstatus != 1 %} class="success" {% endif %}>
 			<td >{{ forloop.counter }}</td>
 			<td >
 				<a class="btn-link" target="_blank" href="{% url 'book_detail' book.szbookid %}">
@@ -34,9 +35,13 @@
 			</td>
 			<td>{{ book.szpretendindexnum }}</td>
 			<td >{{ book.get_case_info }}</td>
-			<td>{{ book.szbookcaseno }}</td>
+			<td>
+				<a class="btn-link" target="_blank" href="{% url 'case_detail' book.szbookcaseno %}">
+					{{ book.szbookcaseno }}
+				</a>
 			<td >{{ book.dtconvertdate }}</td>
 			<td >{% ifequal 1 book.bforcesortcase %}是{% else %}否{% endifequal %}</td>
+			<td >{% ifequal 1 book.nbookstatus %}否{% else %}是{% endifequal %}</td>
 		</tr>
 		{% endfor %}
 	</tbody>
