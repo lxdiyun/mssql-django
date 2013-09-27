@@ -2,7 +2,8 @@ from django.views.generic import TemplateView
 from django.views.generic.base import ContextMixin
 from check import check_area, check_catalog, CHECKED_CATALOG_LIST
 from rfid.utils import AREA_DICT, CATALOG_DICT
-from django.core.urlresolvers import reverse
+from rfid.utils import preare_pre_and_next_catalog, preare_pre_and_next_area
+from rfid import views as rfid_views
 
 
 class AreaDetailBase(ContextMixin):
@@ -18,13 +19,7 @@ class AreaDetailBase(ContextMixin):
                                                AREA_DICT[area][1])
             context["triple_prefix"] = ['pre', 'cur', 'next']
 
-            if area > 1:
-                context["pre"] = reverse(self.view_name,
-                                         args=[area - 1])
-
-            if area < len(AREA_DICT):
-                context["next"] = reverse(self.view_name,
-                                          args=[area + 1])
+            preare_pre_and_next_area(area, self.view_name, context)
 
         return context
 
@@ -39,15 +34,8 @@ class AreaDetailView(TemplateView, AreaDetailBase):
     view_name = "area_detial"
 
 
-class AreaListView(TemplateView):
+class AreaListView(rfid_views.AreaListView):
     template_name = "checkcase/area_list.html"
-
-    def get_context_data(self, **kwargs):
-        global AREA_DICT
-        context = super(AreaListView, self).get_context_data(**kwargs)
-        context["area_list"] = AREA_DICT
-
-        return context
 
 
 class CatalogDetailBase(ContextMixin):
@@ -65,13 +53,7 @@ class CatalogDetailBase(ContextMixin):
             if CATALOG_DICT[catalog][2]:
                 context["static_total"] = CATALOG_DICT[catalog][2]
 
-            if catalog > 1:
-                context["pre"] = reverse(self.view_name,
-                                         args=[catalog - 1])
-
-            if catalog < len(CATALOG_DICT):
-                context["next"] = reverse(self.view_name,
-                                          args=[catalog + 1])
+            preare_pre_and_next_catalog(catalog, self.view_name, context)
 
         return context
 
@@ -86,13 +68,11 @@ class CatalogDetailView(TemplateView, CatalogDetailBase):
     view_name = "catalog_detail"
 
 
-class CatalogListView(TemplateView):
+class CatalogListView(rfid_views.CatalogListView):
     template_name = "checkcase/catalog_list.html"
 
     def get_context_data(self, **kwargs):
-        global CATALOG_DICT
         context = super(CatalogListView, self).get_context_data(**kwargs)
-        context["catalog_list"] = CATALOG_DICT
         context["checked_catalog_list"] = CHECKED_CATALOG_LIST
 
         return context

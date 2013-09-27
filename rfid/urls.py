@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from rfid.views import BookDetailView, BookQueryView, IndexView, CaseDetailView
+from rfid.views import *
 
 urlpatterns = patterns('',
                        url(r'^book/(?P<bookid>\d+)$',
@@ -11,6 +11,18 @@ urlpatterns = patterns('',
                        url(r'^case/(?P<caseid>\d+)$',
                            CaseDetailView.as_view(),
                            name="case_detail"),
+                       url(r'^case_catalog/(?P<catalogid>\d+)$',
+                           CaseCatalogListView.as_view(),
+                           name="case_catalog_list"),
+                       url(r'^case_area/(?P<areaid>\d+)$',
+                           CaseAreaListView.as_view(),
+                           name="case_area_list"),
+                       url(r'^catalog$',
+                           CatalogListView.as_view(),
+                           name="catalog"),
+                       url(r'^area$',
+                           AreaListView.as_view(),
+                           name="area"),
                        url(r'^$',
                            IndexView.as_view(),
                            name="index"),

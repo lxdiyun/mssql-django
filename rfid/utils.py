@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from django.core.urlresolvers import reverse
+
 AREA_DICT = {
     1: (u"一楼西区", u"外文图书"),
     2: (u"一楼西北区", u"N"),
@@ -101,3 +103,23 @@ def trans_case_no(case_no):
                 info += AREA_DICT[area][0]
 
         return info + trans_case_no_without_area(case_no)
+
+
+def preare_pre_and_next_catalog(catalog, view_name, context):
+        if catalog > 1:
+            context["pre"] = reverse(view_name,
+                                     args=[catalog - 1])
+
+        if catalog < len(CATALOG_DICT):
+            context["next"] = reverse(view_name,
+                                      args=[catalog + 1])
+
+
+def preare_pre_and_next_area(area, view_name, context):
+    if area > 1:
+        context["pre"] = reverse(view_name,
+                                 args=[area - 1])
+
+    if area < len(AREA_DICT):
+        context["next"] = reverse(view_name,
+                                  args=[area + 1])

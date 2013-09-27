@@ -1,0 +1,29 @@
+{% extends "site_base.html" %}
+
+{% block title %}RFID分类列表{% endblock title %}
+
+{% block content %}
+<div class="container">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>编号</th>
+				<th>书类</th>
+				<th>伪索书号前缀</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for catalog, info in catalog_list.items %}
+			<tr>   
+				<td>
+					{{ catalog|stringformat:"02d" }}
+					<a target="_blank" href="{% url "case_catalog_list" catalog %}"><i class="icon-search"></i></a>
+				</td>     
+				<td>{{ info.0 }}</td>     
+				<td>{{ info.1 }}</td>     
+			</tr>    
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock content %}

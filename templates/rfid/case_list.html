@@ -1,0 +1,72 @@
+{% extends "site_base.html" %}
+
+{% block title %}层架列表 - {{ list_title }}{% endblock title %}
+
+{% block content %}
+<div class="container">
+	<h3>{{ list_title }}</h3>
+	<div class="row-fluid">
+		<div class="span6">
+			{% if pre %}
+			<p class="text-left"><a class="btn-link"  href="{{ pre }} "><i class="icon-chevron-left"></i>上一区</a></p>
+			{% endif %}
+		</div>
+		<div class="span6">
+			{% if next %}
+			<p class="text-right"><a class="btn-link"  href="{{ next }} ">下一区<i class="icon-chevron-right"></i></a></p>
+			{% endif %}
+		</div>
+	</div>
+	<h5>总共：{{ total_count }}层架</h5>
+
+	<hr></hr>
+
+	<table class="table table-striped table-bordered" id="case_list_table">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>层位</th>
+				<th>编号</th>
+				<th>伪索书号</th>
+				<th>首书</th>
+				<th>查架时间</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for case in cases %}
+		<tr>   
+			<td>{{ forloop.counter }} {{ case.list_state }}</td>   
+			<td>{{ case.translate }}</td>
+			<td>
+				<a class="btn-link" target="_blank" href="{% url 'case_detail' case.szbookcaseno%} ">
+					{{ case.szbookcaseno }}
+				</a>
+			</td>
+			<td>{{ case.szpretendindexnum }}</td>     
+			<td>
+				<a class="btn-link" target="_blank" href="{% url 'book_detail' case.szfirstbookid %}">
+					{{ case.szfirstbookid }}
+				</a>
+			</td>   
+			<td>{{ case.dtlastordercase }}</td>     
+		</tr>    
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock content %}
+
+{% block extend_js %}
+/* Table initialisation */
+$(document).ready(function() {
+	$('#case_list_table').dataTable( {
+		"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+		"sPaginationType": "bootstrap",
+		"oLanguage": {
+			"sLengthMenu": "_MENU_ records per page"
+		},
+		"aLengthMenu": [[-1, 100, 50, 25, 10], ["All", 100, 50, 25, 10]],
+		"iDisplayLength" : -1
+	} );
+} );
+{% endblock %}

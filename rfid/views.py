@@ -1,6 +1,8 @@
 from django.views.generic import TemplateView
 from rfid.models import Bookinfo, Bookcaseidinfo
 from rfid.forms import BookQueryForm
+from rfid.utils import CATALOG_DICT, AREA_DICT
+from rfid.utils import preare_pre_and_next_catalog, preare_pre_and_next_area
 
 
 class BookDetailView(TemplateView):
@@ -8,10 +10,10 @@ class BookDetailView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(BookDetailView, self).get_context_data(**kwargs)
-        bookid = kwargs['bookid']
+        book_id = kwargs['bookid']
         book = None
         try:
-            book = Bookinfo.objects.get(szbookid=bookid)
+            book = Bookinfo.objects.get(szbookid=book_id)
         except Bookinfo.DoesNotExist:
             book = {'szname': "Not exist"}
 
@@ -43,12 +45,12 @@ class CaseDetailView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(CaseDetailView, self).get_context_data(**kwargs)
-        caseid = kwargs['caseid']
+        case_id = kwargs['caseid']
         case = None
         firstbook = None
         books = None
         try:
-            case = Bookcaseidinfo.objects.get(szbookcaseno=caseid)
+            case = Bookcaseidinfo.objects.get(szbookcaseno=case_id)
             books = Bookinfo.objects.filter(szbookcaseno=case.szbookcaseno)
             firstbook = Bookinfo.objects.get(szbookid=case.szfirstbookid)
             case.book = firstbook
@@ -63,6 +65,66 @@ class CaseDetailView(TemplateView):
             context['total'] = len(books)
             context['borrowed'] = len(filter(lambda b: b.nbookstatus != 1,
                                              books))
+
+        return context
+
+
+class CaseCatalogListView(TemplateView):
+    template_name = "rfid/case_list.html"
+    view_name = "case_catalog_list"
+
+    def get_context_data(self, **kwargs):
+        context = super(CaseCatalogListView, self).get_context_data(**kwargs)
+        catalog = int(kwargs['catalogid'])
+        if catalog in CATALOG_DICT:
+            catalog_prefix = CATALOG_DICT[catalog][1]
+            order_by = "dtlastordercase"
+            cases = Bookcaseidinfo.get_cases_by_catalog(catalog_prefix,
+                                                        order_by=order_by)
+            context['cases'] = cases
+            context["list_title"] = CATALOG_DICT[catalog][0]
+            context["total_count"] = len(cases)
+
+            preare_pre_and_next_catalog(catalog, self.view_name, context)
+
+        return context
+
+
+class CaseAreaListView(TemplateView):
+    template_name = "rfid/case_list.html"
+    view_name = "case_area_list"
+
+    def get_context_data(self, **kwargs):
+        context = super(CaseAreaListView, self).get_context_data(**kwargs)
+        area = int(kwargs['areaid'])
+        if area in AREA_DICT:
+            context["list_title"] = "%s %s" % (AREA_DICT[area][0],
+                                               AREA_DICT[area][1])
+            cases = Bookcaseidinfo.get_cases_by_area(area, "dtlastordercase")
+            context['cases'] = cases
+            context["total_count"] = len(cases)
+
+            preare_pre_and_next_area(area, self.view_name, context)
+
+        return context
+
+
+class CatalogListView(TemplateView):
+    template_name = "rfid/catalog_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(CatalogListView, self).get_context_data(**kwargs)
+        context["catalog_list"] = CATALOG_DICT
+
+        return context
+
+
+class AreaListView(TemplateView):
+    template_name = "rfid/area_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(AreaListView, self).get_context_data(**kwargs)
+        context["area_list"] = AREA_DICT
 
         return context
 

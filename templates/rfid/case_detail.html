@@ -1,6 +1,6 @@
 {% extends "site_base.html" %}
 
-{% block title %}层架信息 {{ case.translate }}{% endblock title %}
+{% block title %}层架信息 - {{ case.translate }}{% endblock title %}
 
 {% block content %}
 <div class="container-fluid">
@@ -22,7 +22,7 @@
 	{% endif %}
 	<hr></hr>
 	<p><strong>层位伪索书号：</strong>{{ case.szpretendindexnum }}</p>
-	<p><strong>最近更新时间：</strong>{{ case.dtlastordercase }}</p>
+	<p><strong>最近查架时间：</strong>{{ case.dtlastordercase }}</p>
 	<p><strong>书本总数量：</strong>{{ total }}</p>
 	<p><strong>书本外借量：</strong>{{ borrowed }}</p>
 	{% include "rfid/book_list_intra_table.html" %}
