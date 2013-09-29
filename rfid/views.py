@@ -3,6 +3,7 @@ from rfid.models import Bookinfo, Bookcaseidinfo
 from rfid.forms import BookQueryForm
 from rfid.utils import CATALOG_DICT, AREA_DICT
 from rfid.utils import preare_pre_and_next_catalog, preare_pre_and_next_area
+from django.utils.translation import ugettext as _
 
 
 class BookDetailView(TemplateView):
@@ -80,7 +81,8 @@ class CaseCatalogListView(TemplateView):
             catalog_prefix = CATALOG_DICT[catalog][1]
             order_by = "dtlastordercase"
             cases = Bookcaseidinfo.get_cases_by_catalog(catalog_prefix,
-                                                        order_by=order_by)
+                                                        order_by=order_by,
+                                                        exculde_empty=False)
             context['cases'] = cases
             context["list_title"] = CATALOG_DICT[catalog][0]
             context["total_count"] = len(cases)
@@ -100,7 +102,10 @@ class CaseAreaListView(TemplateView):
         if area in AREA_DICT:
             context["list_title"] = "%s %s" % (AREA_DICT[area][0],
                                                AREA_DICT[area][1])
-            cases = Bookcaseidinfo.get_cases_by_area(area, "dtlastordercase")
+            order_by = "dtlastordercase"
+            cases = Bookcaseidinfo.get_cases_by_area(area,
+                                                     order_by=order_by,
+                                                     exculde_empty=False)
             context['cases'] = cases
             context["total_count"] = len(cases)
 
@@ -109,24 +114,28 @@ class CaseAreaListView(TemplateView):
         return context
 
 
-class CatalogListView(TemplateView):
-    template_name = "rfid/catalog_list.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(CatalogListView, self).get_context_data(**kwargs)
-        context["catalog_list"] = CATALOG_DICT
-
-        return context
-
-
 class AreaListView(TemplateView):
     template_name = "rfid/area_list.html"
+    title = _("RFID Area List")
+    forward_view = "case_area_list"
+    column_names = [_("Number"), _("Area"), _("Area content")]
+    area_list = AREA_DICT
 
     def get_context_data(self, **kwargs):
         context = super(AreaListView, self).get_context_data(**kwargs)
-        context["area_list"] = AREA_DICT
+        context["area_list"] = self.area_list
+        context["title"] = self.title
+        context["forward_view"] = self.forward_view
+        context["columns"] = self.column_names
 
         return context
+
+
+class CatalogListView(AreaListView):
+    title = _("RFID Catalog List")
+    forward_view = "case_catalog_list"
+    column_names = [_("Number"), _("Catalog"), _("Catalog Prefix")]
+    area_list = CATALOG_DICT
 
 
 class IndexView(TemplateView):

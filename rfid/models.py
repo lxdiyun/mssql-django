@@ -172,20 +172,30 @@ class Bookcaseidinfo(models.Model):
         return trans_case_no(self.szbookcaseno)
 
     @staticmethod
-    def get_cases_by_catalog(catalog_prefix, order_by='szpretendindexnum'):
+    def get_cases_by_catalog(catalog_prefix,
+                             order_by='szpretendindexnum',
+                             exculde_empty=True):
         cases = Bookcaseidinfo.objects.all()
-        cases = Bookcaseidinfo.objects.exclude(szfirstbookid__isnull=True)
-        cases = cases.exclude(szfirstbookid__exact='')
+        if exculde_empty:
+            cases = Bookcaseidinfo.objects.exclude(szfirstbookid__isnull=True)
+            cases = cases.exclude(szfirstbookid__exact='')
+        else:
+            cases = Bookcaseidinfo.objects
         cases = cases.filter(szpretendindexnum__startswith=catalog_prefix)
         cases = cases.order_by(order_by)
 
         return cases
 
     @staticmethod
-    def get_cases_by_area(area_prefix, order_by='szpretendindexnum'):
+    def get_cases_by_area(area_prefix,
+                          order_by='szpretendindexnum',
+                          exculde_empty=True):
         area = "%06d" % area_prefix
-        cases = Bookcaseidinfo.objects.exclude(szfirstbookid__isnull=True)
-        cases = cases.exclude(szfirstbookid__exact='')
+        if exculde_empty:
+            cases = Bookcaseidinfo.objects.exclude(szfirstbookid__isnull=True)
+            cases = cases.exclude(szfirstbookid__exact='')
+        else:
+            cases = Bookcaseidinfo.objects
         cases = cases.filter(szbookcaseno__startswith=area)
         cases = cases.order_by(order_by)
 

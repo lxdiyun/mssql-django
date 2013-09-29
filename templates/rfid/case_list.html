@@ -25,10 +25,10 @@
 		<thead>
 			<tr>
 				<th>#</th>
-				<th>层位</th>
-				<th>编号</th>
+				<th>层位信息</th>
+				<th>层位代码</th>
 				<th>伪索书号</th>
-				<th>首书</th>
+				<th>首书编号</th>
 				<th>查架时间</th>
 			</tr>
 		</thead>
@@ -44,9 +44,12 @@
 			</td>
 			<td>{{ case.szpretendindexnum }}</td>     
 			<td>
+				{% if case.szfirstbookid %}
 				<a class="btn-link" target="_blank" href="{% url 'book_detail' case.szfirstbookid %}">
 					{{ case.szfirstbookid }}
 				</a>
+					
+				{% endif %}
 			</td>   
 			<td>{{ case.dtlastordercase }}</td>     
 		</tr>    
