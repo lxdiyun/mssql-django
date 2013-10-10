@@ -20,4 +20,5 @@ class CaseFirstBookChangesView(ListView):
             self
         ).get_context_data(**kwargs)
         context['request'] = self.request
+
         return context
