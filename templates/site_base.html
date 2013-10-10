@@ -1,3 +1,5 @@
+{% load tz %}
+
 <!DOCTYPE html>
 <html lang="en"><head>
 		<meta charset="utf-8">
@@ -31,9 +33,9 @@
 	</head>
 
 	<body id="body">
-
-
+		{% localtime off %}
 		{% block content %}{% endblock %}
+		{% endlocaltime %}
 		<hr>
 
 		<!-- modal-gallery is the modal dialog used for the image gallery -->
