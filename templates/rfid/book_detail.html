@@ -9,7 +9,13 @@
 	<p><strong>索书号：</strong>{{ book.szbookindex }}</p>
 	<p><strong>伪索书号：</strong>{{ book.szpretendindexnum }}</p>
 	<p><strong>层架信息：</strong>{{ book.get_case_info }}</p>
-	<p><strong>所属层架编号：</strong><a class="btn-link" target="_blank" href="{% url 'case_detail' book.szbookcaseno%} ">{{ book.szbookcaseno }}</a></p>
+	<p><strong>所属层架编号：</strong>
+	{% if book.szbookcaseno %}
+		<a class="btn-link" target="_blank" href="{% url 'case_detail' book.szbookcaseno%} ">
+			{{ book.szbookcaseno }}
+		</a>
+	{% endif %}
+	</p>
 	<p><strong>是否强制定位：</strong>{% ifequal 1 book.bforcesortcase %}是{% else %}否{% endifequal %}</p>
 	<p><strong>注册日期：</strong>{{ book.dtconvertdate }}</p>
 	<p><strong>作者：</strong>{{ book.szauthor }}</p>

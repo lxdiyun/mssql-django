@@ -36,9 +36,11 @@
 			<td>{{ book.szpretendindexnum }}</td>
 			<td >{{ book.get_case_info }}</td>
 			<td>
+				{% if book.szbookcaseno %}
 				<a class="btn-link" target="_blank" href="{% url 'case_detail' book.szbookcaseno %}">
 					{{ book.szbookcaseno }}
 				</a>
+				{% endif %}
 			<td >{{ book.dtconvertdate }}</td>
 			<td >{% ifequal 1 book.bforcesortcase %}是{% else %}否{% endifequal %}</td>
 			<td >{% ifequal 1 book.nbookstatus %}否{% else %}是{% endifequal %}</td>
