@@ -20,4 +20,5 @@ urlpatterns = patterns('',
                        url(r'^checkcase/', include('checkcase.urls')),
                        url(r'^checkbook/', include('checkbook.urls')),
                        url(r'^log/', include('triggerlog.urls')),
+                       url(r'^report/', include('report.urls')),
                        )
