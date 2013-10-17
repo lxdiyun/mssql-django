@@ -5,19 +5,41 @@
 
 {% block content %}
 <div class="container-fluid">
-	<form method="POST" action="{% url 'book_query' %}">
+	<form method="GET" action="{% url 'query_not_popular_books' %}">
 		<fieldset>
-			<legend>查询图书信息</legend>
-			<label>条码号</label>
-			<textarea name="book_ssid_list" rows="8">{{ book_ssid_list }}</textarea>
-			<span class="help-block">使用换行或空格分隔条码号</span>
-			<button type="submit" class="btn">查询</button>
+			<legend>查询冷门图书信息</legend>
+				
+			<div class="row">
+			<div class="span1">
+				<button type="submit" class="btn">查询</button>
+			</div>
+			<div class="span4">
+				在
+				<input id="datepicker" name="date" placeholder="此日期" data-format="yyyy-MM-dd" type="text"></input>
+				后
+			</div>
+
+			<div class="span5">
+				<select id="query_by" name="query_by">
+					{% for key, catalog in CATALOG_DICT.items %}
+					<option value="catalog_{{ key }}">{{ catalog.0 }}类</option>
+					{% endfor %}
+					{% for key, area in AREA_DICT.items %}
+					<option value="area_{{ key }}">{{ area.0 }}-{{ area.1 }}</option>
+					{% endfor %}
+				</select>
+				中未有出借的图书
+			</div>
+		</div>
 		</fieldset>
-		{% csrf_token %}
 	</form>
 	{% include "rfid/book_list_intra_table.html" %}
 	{% if is_paginated %}
-	{% bootstrap_paginate page_obj url_view_name='not_popular_books' range=10 %}
+	{% bootstrap_paginate page_obj range=10 %}
 	{% endif %}
 </div>
 {% endblock content %}
+
+{% block extend_js %}
+{% include "report/not_popular_books.js" %}
+{% endblock %}

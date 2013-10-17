@@ -93,7 +93,6 @@ def trans_case_no_without_area(case_no):
 
 
 def trans_case_no(case_no):
-        global AREA_DICT
         info = ""
 
         if "" != case_no:
