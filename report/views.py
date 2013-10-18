@@ -13,7 +13,7 @@ from adli_django_utils.actions import export_as_csv
 class NotPopularBooksView(ListView):
     template_name = "report/not_popular_books.html"
     context_object_name = 'books'
-    paginate_by = 200
+    paginate_by = 100
     date = None
     query_by = None
     sub = None
