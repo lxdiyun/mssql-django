@@ -6,8 +6,8 @@
 			<th>#</th>
 			<th>登录号</th>
 			<th>书名</th> 
-			<th>作者</th>
 			<th>索书号</th>
+			<th>伪索书号</th>
 			<th>层架信息</th> 
 			<th>所属层架编号</th>
 			<th>注册时间</th>
@@ -26,13 +26,13 @@
 				</a>
 			</td>
 			<td >{{ book.szname }}</td>
-			<td>{{ book.szauthor }}</td>
 			<td >
 				<a class="btn-link" target="_blank" href="{{ book.get_search_url }}">
 					<i class="icon-hand-right"></i>
 					{{ book.szbookindex }}
 				</a>
 			</td>
+			<td >{{ book.szpretendindexnum }}</td>
 			<td >{{ book.get_case_info }}</td>
 			<td>
 				{% if book.szbookcaseno %}

@@ -25,7 +25,7 @@
 					<option value="catalog_{{ key }}">{{ catalog.0 }}类</option>
 					{% endfor %}
 					{% for key, area in AREA_DICT.items %}
-					<option value="area_{{ key }}">{{ area.0 }}-{{ area.1 }}</option>
+					<option value="area_{{ key }}">{{ area.0 }}区-{{ area.1 }}</option>
 					{% endfor %}
 				</select>
 				中未有出借的图书
@@ -33,9 +33,18 @@
 		</div>
 		</fieldset>
 	</form>
-	{% include "rfid/book_list_intra_table.html" %}
+	{% if books %}
+	<p>在{{ query_date }}后,
+	{% if "catalog" == query_by %}
+	{{ query_scope }}类中
+	{% elif "area" == query_by %}
+	{{ query_scope }}区中
+	{% endif %}</p>
+	<p><strong>总共:</strong>{{ paginator.count }}<strong>册图书未出借过</strong></p>
 	{% if is_paginated %}
 	{% bootstrap_paginate page_obj range=10 %}
+	{% endif %}
+	{% include "rfid/book_list_intra_table.html" %}
 	{% endif %}
 </div>
 {% endblock content %}
