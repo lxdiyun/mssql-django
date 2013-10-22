@@ -45,9 +45,9 @@
 		中未有出借的图书
 	</fieldset>
 </form>
+{% if books %}
 <hr></hr>
 <div class="form-inline">
-		{% if books %}
 		在<strong>{{ query_date }}</strong>后,
 		<strong>
 		{% if "catalog" == query_by %}
