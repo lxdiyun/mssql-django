@@ -4,12 +4,16 @@
 
 {% block content %}
 <div class="container-fluid">
-	<form method="POST" action="{% url 'book_query' %}">
+	<legend>查询图书信息</legend>
+	<form method="POST" action="{% url 'book_query' %}" novalidate>
 		<fieldset>
-			<legend>查询图书信息</legend>
-			<label>条码号</label>
-			<textarea name="book_ssid_list" rows="8">{{ book_ssid_list }}</textarea>
-			<span class="help-block">使用换行或空格分隔条码号</span>
+			<div class="control-group">
+				<label for="book_ssid_list" class="control-label">条码号(使用换行或空格分隔条码号)</label>
+				<div class="controls">
+					<textarea class="form-control" name="book_ssid_list" rows="8" required data-validation-required-message="请输入条码号">{{ book_ssid_list }}</textarea>
+					<p class="help-block"></p>
+				</div>
+			</div>
 			<button type="submit" class="btn">查询</button>
 		</fieldset>
 		{% csrf_token %}
@@ -25,5 +29,8 @@
 {% endblock content %}
 
 {% block extend_js %}
-	{% include "rfid/book_list_intra_table.js" %}
+{% include "rfid/book_list_intra_table.js" %}
+$(document).ready(function() {
+	$("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
+});
 {% endblock %}

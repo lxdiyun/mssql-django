@@ -5,35 +5,23 @@
 {% block content %}
 <div class="container">
 	<h1>RFID 辅助信息</h1>
-	<h2>综合信息查询</h2>
-	<h3>
-		<a target="_blank" href="{% url 'area' %}">区域列表</a>
-	</h3>
-	<h3>
-		<a target="_blank" href="{% url 'catalog' %}">分类列表</a>
-	</h3>
-	<h3>
-		<a target="_blank" href="{% url 'book_query' %}">图书信息批量查询</a>
-	</h3>
-	<h2>首书错架检测</h2>
-	<h3>
-		<a target="_blank" href="{% url 'area_list' %}">区域首书错架检测</a>
-	</h3>
-	<h3>
-		<a target="_blank" href="{% url 'catalog_list' %}">分类首书错架检测</a>
-	</h3>
-	<h3>
-		<a target="_blank" href="{% url 'log_first_book_changes' %}">首书变更日志</a>
-	</h3>
-	<h2>错误图书查询</h2>
-	<h3>
-		<a target="_blank" href="{% url 'books_no_case' %}">图书未上架</a>
-	</h3>
-	<h3>
-		<a target="_blank" href="{% url 'books_index_error' %}">索书号错误</a>
-	</h3>
-	<h3>
-		<a target="_blank" href="{% url 'query_not_popular_books' %}">冷门图书查询</a>
-	</h3>
+	<dl>
+		<dt>综合信息查询</dt>
+		<dd><a target="_blank" href="{% url 'area' %}">区域列表</a></dd>
+		<dd><a target="_blank" href="{% url 'catalog' %}">分类列表</a></dd>
+		<dd><a target="_blank" href="{% url 'book_query' %}">图书信息批量查询</a></dd>
+		<dd><a target="_blank" href="{% url 'query_not_popular_books' %}">冷门图书查询</a></dd>
+	</dl >
+	<dl>
+		<dt>首书错架检测</dt>
+		<dd><a target="_blank" href="{% url 'area_list' %}">区域首书错架检测</a></dd>
+		<dd><a target="_blank" href="{% url 'catalog_list' %}">分类首书错架检测</a></dd>
+		<dd><a target="_blank" href="{% url 'log_first_book_changes' %}">首书变更日志</a></dd>
+	</dl>
+	<dl>
+		<dt>错误图书查询</dt>
+		<dd><a target="_blank" href="{% url 'books_no_case' %}">图书未上架</a></dd>
+		<dd><a target="_blank" href="{% url 'books_index_error' %}">索书号错误</a></dd>
+	</dl>
 </div>
 {% endblock content %}

@@ -17,12 +17,17 @@
 			{% endif %}
 		</div>
 	</div>
-	<h5>总共：{{ total_count }}层架</h5>
-	{% if static_total %}
-	<h5>应有：{{ static_total }}层架</h5>
-	{% endif %}
-	<h5>错误：{{ error_count }}层架</h5>
-	<h5>警告：{{ warning_count }}层架</h5>
+	<dl class="dl-horizontal">
+		<dt>总共：</dt>
+		<dd>{{ total_count }}层架</dd>
+		{% if static_total %}
+		<dt>应有：</dt>
+		<dd>{{ static_total }}层架</dd>
+		{% endif %}
+		<dt>错误：</dt>
+		<dd>{{ error_count }}层架</dd>
+		<dt>警告：</dt>
+		<dd>{{ warning_count }}层架</dd>
 
 	<table class="table table-striped">
 		<thead>

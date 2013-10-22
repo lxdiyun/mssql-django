@@ -4,57 +4,71 @@
 {% block title %}冷门图书{% endblock title %}
 
 {% block content %}
-	<form method="GET" action="{% url 'query_not_popular_books' %}">
-		<fieldset>
-			<legend>查询冷门图书信息</legend>
-			<div class="row">
-				<div class="span1">
-					<button type="submit" class="btn btn-info">查询</button>
-				</div>
-				<div class="span4">
-					在
-					<input id="datepicker" name="date" placeholder="此日期" data-format="yyyy-MM-dd" type="text"></input>
-					后
-				</div>
+<div class="container-fluid">
+<legend>查询冷门图书信息</legend>
+<form class="form-inline" method="GET" action="{% url 'query_not_popular_books' %}" novalidate>
+	<fieldset>
+		<t class="control-group">
+		<p class="help-block"></p>
+		<button type="submit" class="btn btn-info">查询</button>
+		在
+		<input id="datepicker"
+		name="date" 
+		placeholder="此日期" 
+		data-format="yyyy-MM-dd" 
+		type="text" required="" 
+		class="form-control" 
+		data-validation-required-message="请填写日期"
+		value="{% if query_date %}{{ query_date }}{% endif %}"
+		>
+		后
+		</t>
 
-				<div class="span5">
-					<select id="query_by" name="query_by">
-						{% for key, catalog in CATALOG_DICT.items %}
-						<option value="catalog_{{ key }}">{{ catalog.0 }}类</option>
-						{% endfor %}
-						{% for key, area in AREA_DICT.items %}
-						<option value="area_{{ key }}">{{ area.0 }}-{{ area.1 }}</option>
-						{% endfor %}
-					</select>
-					中未有出借的图书
-				</div>
-			</div>
-		</fieldset>
-	</form>
-	<hr></hr>
-	<div class="row">
-		<div class="span5">
-			{% if books %}
-			<p>在<strong>{{ query_date }}</strong>后,
-			<strong>
-			{% if "catalog" == query_by %}
-			{{ query_scope }}类
-			{% elif "area" == query_by %}
-			{{ query_scope }}
+		<select id="query_by" name="query_by">
+			{% for key, catalog in CATALOG_DICT.items %}
+			<option value="catalog_{{ key }}"
+			{% if sub == key and 'catalog' == query_by %}
+			selected="selected"
 			{% endif %}
-			</strong>中, 总共:<strong>{{ paginator.count }}</strong>册图书未出借过</p>
-		</div>
-		<div class="span1">
-			<a href="{% url 'export_not_popular_books' query_date  query_by sub %}" class="btn btn-danger">导出</a>
-		</div>
-	</div>
-	{% if is_paginated %}
-	{% bootstrap_paginate page_obj range=10 %}
-	{% endif %}
-	{% include "rfid/book_list_intra_table.html" %}
-	{% endif %}
+			>
+			{{ catalog.0 }}类
+			</option>
+			{% endfor %}
+			{% for key, area in AREA_DICT.items %}
+			<option value="area_{{ key }}"
+			{% if sub == key and 'area' == query_by %}
+			selected="selected"
+			{% endif %}
+			>{{ area.0 }}-{{ area.1 }}</option>
+			{% endfor %}
+		</select>
+		中未有出借的图书
+	</fieldset>
+</form>
+<hr></hr>
+<div class="form-inline">
+		{% if books %}
+		在<strong>{{ query_date }}</strong>后,
+		<strong>
+		{% if "catalog" == query_by %}
+		{{ query_scope }}类
+		{% elif "area" == query_by %}
+		{{ query_scope }}
+		{% endif %}
+		</strong>中, 总共:<strong>{{ paginator.count }}</strong>册图书未出借过.
+		<a href="{% url 'export_not_popular_books' query_date  query_by sub %}" class="btn btn-danger">导出</a>
+</div>
+{% if is_paginated %}
+{% bootstrap_paginate page_obj range=10 %}
+{% endif %}
+{% include "rfid/book_list_intra_table.html" %}
+{% endif %}
+</div>
 {% endblock content %}
 
 {% block extend_js %}
 {% include "report/not_popular_books.js" %}
+$(document).ready(function() {
+	$("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
+});
 {% endblock %}
