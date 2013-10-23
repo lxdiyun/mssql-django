@@ -43,7 +43,7 @@ class NotPopularBooksView(ListView):
 
             if "catalog" == self.query_by and (self.sub in CATALOG_DICT):
                 catalog = CATALOG_DICT[self.sub]
-                sub_q = Q(szbookindex__startswith=CATALOG_DICT[self.sub][0])
+                sub_q = Q(szpretendindexnum__startswith=CATALOG_DICT[self.sub][1])
                 self.query_scope = catalog[0]
             elif "area" == self.query_by and (self.sub in AREA_DICT):
                 area = AREA_DICT[self.sub]
@@ -52,8 +52,8 @@ class NotPopularBooksView(ListView):
                 self.query_scope = area[0] + "-" + area[1]
 
             if sub_q:
-                books = Bookinfo.objects.filter(
-                    sub_q & (date_q | empty_date_q))
+                books = Bookinfo.objects.filter(sub_q & (date_q | empty_date_q))
+                books = books.order_by('dtborrowdate', 'szbookid')
 
         return books
 
@@ -109,12 +109,13 @@ class ExportNotPopualrBooksView(View):
         books = []
 
         if "catalog" == query_by and (scope in CATALOG_DICT):
-            sub_q = Q(szbookindex__startswith=CATALOG_DICT[scope][0])
+            sub_q = Q(szpretendindexnum__startswith=CATALOG_DICT[scope][1])
         elif "area" == query_by and (scope in AREA_DICT):
             area_prefix = "%06d" % scope
             sub_q = Q(szbookcaseno__startswith=area_prefix)
 
         if sub_q:
             books = Bookinfo.objects.filter(sub_q & (date_q | empty_date_q))
+            books = books.order_by('dtborrowdate', 'szbookid')
 
         return books
