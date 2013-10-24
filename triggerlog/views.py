@@ -13,12 +13,3 @@ class CaseFirstBookChangesView(ListView):
             tablename=self.table).order_by('-time')
 
         return logs
-
-    def get_context_data(self, **kwargs):
-        context = super(
-            CaseFirstBookChangesView,
-            self
-        ).get_context_data(**kwargs)
-        context['request'] = self.request
-
-        return context

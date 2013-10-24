@@ -1,6 +1,8 @@
 {% extends "site_base.html" %}
 {% load bootstrap_pagination %}
 
+{% block navnum %}1{% endblock navnum %}
+
 {% block title %}冷门图书{% endblock title %}
 
 {% block content %}
@@ -71,4 +73,4 @@
 $(document).ready(function() {
 $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
 });
-{% endblock %}
+{% endblock extend_js %}

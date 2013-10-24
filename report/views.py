@@ -59,7 +59,6 @@ class NotPopularBooksView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(NotPopularBooksView, self).get_context_data(**kwargs)
-        context['request'] = self.request
         context['AREA_DICT'] = AREA_DICT
         context['CATALOG_DICT'] = CATALOG_DICT
         context['query_date'] = self.date

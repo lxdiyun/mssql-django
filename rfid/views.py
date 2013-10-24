@@ -3,6 +3,7 @@ from rfid.models import Bookinfo, Bookcaseidinfo
 from rfid.forms import BookQueryForm
 from rfid.utils import CATALOG_DICT, AREA_DICT
 from rfid.utils import preare_pre_and_next_catalog, preare_pre_and_next_area
+from checkcase.check import CHECKED_CATALOG_LIST
 from django.utils.translation import ugettext as _
 
 
@@ -118,7 +119,10 @@ class AreaListView(TemplateView):
     template_name = "rfid/area_list.html"
     title = _("RFID Area List")
     forward_view = "case_area_list"
-    column_names = [_("Number"), _("Area"), _("Area content")]
+    column_names = [_("Number"),
+                    _("Area"),
+                    _("Area content"),
+                    _("Check first book")]
     area_list = AREA_DICT
 
     def get_context_data(self, **kwargs):
@@ -134,8 +138,17 @@ class AreaListView(TemplateView):
 class CatalogListView(AreaListView):
     title = _("RFID Catalog List")
     forward_view = "case_catalog_list"
-    column_names = [_("Number"), _("Catalog"), _("Catalog Prefix")]
+    column_names = [_("Number"),
+                    _("Catalog"),
+                    _("Catalog Prefix"),
+                    _("Check first book")]
     area_list = CATALOG_DICT
+
+    def get_context_data(self, **kwargs):
+        context = super(CatalogListView, self).get_context_data(**kwargs)
+        context["checked_catalog_list"] = CHECKED_CATALOG_LIST
+
+        return context
 
 
 class IndexView(TemplateView):

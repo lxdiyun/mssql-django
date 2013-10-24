@@ -46,7 +46,11 @@
 
 	<body id="body">
 		{% localtime off %}
-		{% block content %}{% endblock %}
+
+		{% block nav_bar  %}{% include "site_base_nav_bar.html" %} {% endblock nav_bar %}
+		{% block breadnum %}{% endblock breadnum %}
+		{% block content %}{% endblock content %}
+
 		{% endlocaltime %}
 		<hr>
 
@@ -93,5 +97,12 @@
 		<!--<![endif]-->
 		<script type="text/javascript">
 			{% block extend_js %}{% endblock %}
+			$(document).ready(function () {
+				var navnum = {% block navnum %}-1{% endblock navnum %};
+				if (-1 != navnum)
+				{
+					$('.navlink:eq('+navnum+')').addClass('active');
+				}
+			});
 		</script>
 </body></html>

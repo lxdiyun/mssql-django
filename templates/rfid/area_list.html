@@ -2,6 +2,8 @@
 
 {% block title %}{{ title }}{% endblock title %}
 
+{% block navnum %}1{% endblock navnum %}
+
 {% block content %}
 <div class="container">
 	<h1>{{ title }}</h1>
@@ -11,6 +13,7 @@
 				<th>{{ columns.0 }}</th>
 				<th>{{ columns.1 }}</th>
 				<th>{{ columns.2 }}</th>
+				<th>{{ columns.3 }}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -18,10 +21,18 @@
 			<tr>   
 				<td>
 					{{ area|stringformat:"02d" }}
-					<a target="_blank" href="{% url forward_view area %}"><i class="icon-search"></i></a>
+					{% if info.0 in checked_catalog_list %}
+					<i class="icon-ok"></i>
+					{% endif  %}
 				</td>     
-				<td>{{ info.0 }}</td>     
+				<td>
+					<a title="层架列表" target="_blank" href="{% url forward_view area %}">{{ info.0 }}</a> 
+				</td>     
 				<td>{{ info.1 }}</td>     
+				<td>
+					<a title="详细列表" target="_blank" href="{% url "area_detial" area %}"><i class="icon-search"></i></a>
+					<a title="概要列表" class="btn-link" target="_blank" href="{% url "area_detial_error_only" area %}"><i class="icon-th-list"></i></a>
+				</td>     
 			</tr>    
 			{% endfor %}
 		</tbody>

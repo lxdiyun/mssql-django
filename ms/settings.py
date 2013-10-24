@@ -1,4 +1,5 @@
 # Django settings for ms project.
+import django.conf.global_settings as DEFAULT_SETTINGS
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -183,3 +184,8 @@ if DEBUG is True:
         # 'SHOW_TOOLBAR_CALLBACK': custom_show_toolbar,
         'TAG': 'body',
     }
+
+# template preocessors
+TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
+    'django.core.context_processors.request',
+)

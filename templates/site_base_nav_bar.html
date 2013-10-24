@@ -1,0 +1,44 @@
+<div class="navbar navbar-fixed-top navbar-inverse">
+	<div class="navbar-inner">
+		<div class="container">
+			<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</a>
+			<div class="nav-collapse collapse">
+				<ul class="nav">
+					<li class="navlink"><a href="{% url 'index' %}">首页</a></li>
+					<li class="dropdown navlink">
+					<a data-toggle="dropdown" class="dropdown-toggle" href="#">综合信息查询<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="{% url 'area' %}">区域列表</a></li>
+						<li><a href="{% url 'catalog' %}">分类列表</a></li>
+						<li class="divider"></li>
+						<li class="nav-header">查询</li>
+						<li><a href="{% url 'book_query' %}">图书信息批量查询</a></li>
+						<li><a href="{% url 'query_not_popular_books' %}">冷门图书查询</a></li>
+					</ul>
+					</li>
+					<li class="dropdown navlink">
+					<a data-toggle="dropdown" class="dropdown-toggle" href="#">首书错架检测<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="{% url 'area_list' %}">区域首书错架检测</a></li>
+						<li><a href="{% url 'catalog_list' %}">分类首书错架检测</a></li>
+						<li class="divider"></li>
+						<li class="nav-header">日志</li>
+						<li><a href="{% url 'log_first_book_changes' %}#">首书变更日志</a></li>
+					</ul>
+					</li>
+					<li class="dropdown navlink">
+					<a data-toggle="dropdown" class="dropdown-toggle" href="#">错误图书查询<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="{% url 'books_no_case' %}">图书未上架</a></li>
+						<li><a href="{% url 'books_index_error' %}">索书号错误</a></li>
+					</ul>
+					</li>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div>
+	</div>
+</div>

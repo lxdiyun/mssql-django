@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-29 12:39+0800\n"
+"POT-Creation-Date: 2013-10-24 10:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,30 +18,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: views.py:123
-msgid "RFID Catalog List"
-msgstr "RFID 分类列表"
-
-#: views.py:125 views.py:138
-msgid "Number"
-msgstr "编号"
-
-#: views.py:125
-msgid "Catalog"
-msgstr "分类"
-
-#: views.py:125
-msgid "Catalog Prefix"
-msgstr "分类前缀"
-
-#: views.py:136
+#: views.py:120
 msgid "RFID Area List"
 msgstr "RFID 区域列表"
 
-#: views.py:138
+#: views.py:122 views.py:141
+msgid "Number"
+msgstr "编号"
+
+#: views.py:123
 msgid "Area"
 msgstr "区域"
 
-#: views.py:138
+#: views.py:124
 msgid "Area content"
 msgstr "区域内容"
+
+#: views.py:125 views.py:144
+msgid "Check first book"
+msgstr "首书错误检测"
+
+#: views.py:139
+msgid "RFID Catalog List"
+msgstr "RFID 分类列表"
+
+#: views.py:142
+msgid "Catalog"
+msgstr "分类"
+
+#: views.py:143
+msgid "Catalog Prefix"
+msgstr "分类前缀"
