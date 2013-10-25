@@ -164,7 +164,7 @@ def check_cases(cases):
         case.is_warning = False
         if case.szfirstbookid in book_dict:
             case.book = book_dict[case.szfirstbookid]
-            if case.book.bforcesortcase:
+            if case.szbookcaseno != case.book.szbookcaseno:
                 case.is_warning = True
 
             if case.book.szpretendindexnum != case.szpretendindexnum:
