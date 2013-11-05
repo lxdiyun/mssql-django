@@ -30,8 +30,8 @@
 				</td>     
 				<td>{{ info.1 }}</td>     
 				<td>
-					<a title="详细列表" target="_blank" href="{% url "area_detial" area %}"><i class="icon-search"></i></a>
-					<a title="概要列表" class="btn-link" target="_blank" href="{% url "area_detial_error_only" area %}"><i class="icon-th-list"></i></a>
+					<a title="详细列表" target="_blank" href="{% url check_error_detail_view area %}"><i class="icon-search"></i></a>
+					<a title="概要列表" class="btn-link" target="_blank" href="{% url check_error_view area %}"><i class="icon-th-list"></i></a>
 				</td>     
 			</tr>    
 			{% endfor %}

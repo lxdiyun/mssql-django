@@ -119,6 +119,8 @@ class AreaListView(TemplateView):
     template_name = "rfid/area_list.html"
     title = _("RFID Area List")
     forward_view = "case_area_list"
+    check_error_view = "checkcase_area_detail_error_only"
+    check_error_detail_view = "checkcase_area_detail"
     column_names = [_("Number"),
                     _("Area"),
                     _("Area content"),
@@ -130,6 +132,8 @@ class AreaListView(TemplateView):
         context["area_list"] = self.area_list
         context["title"] = self.title
         context["forward_view"] = self.forward_view
+        context["check_error_view"] = self.check_error_view
+        context["check_error_detail_view"] = self.check_error_detail_view
         context["columns"] = self.column_names
 
         return context
@@ -138,6 +142,8 @@ class AreaListView(TemplateView):
 class CatalogListView(AreaListView):
     title = _("RFID Catalog List")
     forward_view = "case_catalog_list"
+    check_error_view = "checkcase_catalog_detail_error_only"
+    check_error_detail_view = "checkcase_catalog_detail"
     column_names = [_("Number"),
                     _("Catalog"),
                     _("Catalog Prefix"),

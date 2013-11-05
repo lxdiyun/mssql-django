@@ -20,12 +20,12 @@
 			<tr>   
 				<td>
 					{{ catalog|stringformat:"02d" }}
-					<a target="_blank" href="{% url "catalog_detail" catalog %}"><i class="icon-search"></i></a>
+					<a target="_blank" href="{% url "checkcase_catalog_detail" catalog %}"><i class="icon-search"></i></a>
 					{% if info.0 in checked_catalog_list %}
 					<i class="icon-ok"></i>
 					{% endif  %}
 				</td>     
-				<td><a class="btn-link" target="_blank" href="{% url "catalog_detail_error_only" catalog %}">{{ info.0 }}</a></td>     
+				<td><a class="btn-link" target="_blank" href="{% url "checkcase_catalog_detail_error_only" catalog %}">{{ info.0 }}</a></td>     
 				<td>{{ info.1 }}</td>     
 			</tr>    
 			{% endfor %}

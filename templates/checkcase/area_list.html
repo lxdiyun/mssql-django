@@ -20,9 +20,9 @@
 			<tr>   
 				<td>
 					{{ area|stringformat:"02d" }}
-					<a target="_blank" href="{% url "area_detial" area %}"><i class="icon-search"></i></a>
+					<a target="_blank" href="{% url "checkcase_area_detail" area %}"><i class="icon-search"></i></a>
 				</td>     
-				<td><a class="btn-link" target="_blank" href="{% url "area_detial_error_only" area %}">{{ info.0 }}</a></td>     
+				<td><a class="btn-link" target="_blank" href="{% url "checkcase_area_detail_error_only" area %}">{{ info.0 }}</a></td>     
 				<td>{{ info.1 }}</td>     
 			</tr>    
 			{% endfor %}
