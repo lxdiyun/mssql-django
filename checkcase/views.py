@@ -26,12 +26,12 @@ class AreaDetailBase(ContextMixin):
 
 class AreaDetailErrorOnlyView(TemplateView, AreaDetailBase):
     template_name = "checkcase/detail_error_only.html"
-    view_name = "area_detial_error_only"
+    view_name = "checkcase_area_detail_error_only"
 
 
 class AreaDetailView(TemplateView, AreaDetailBase):
     template_name = "checkcase/detail.html"
-    view_name = "area_detial"
+    view_name = "checkcase_area_detail"
 
 
 class AreaListView(rfid_views.AreaListView):
@@ -60,12 +60,12 @@ class CatalogDetailBase(ContextMixin):
 
 class CatalogDetailErrorOnlyView(TemplateView, CatalogDetailBase):
     template_name = "checkcase/detail_error_only.html"
-    view_name = "catalog_detail_error_only"
+    view_name = "checkcase_catalog_detail_error_only"
 
 
 class CatalogDetailView(TemplateView, CatalogDetailBase):
     template_name = "checkcase/detail.html"
-    view_name = "catalog_detail"
+    view_name = "checkcase_catalog_detail"
 
 
 class CatalogListView(rfid_views.CatalogListView):
