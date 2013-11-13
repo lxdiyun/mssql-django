@@ -22,7 +22,11 @@
 		<tbody>
 			{% for log in logs %}
 			<tr>   
-				<td>{{ log.get_case_no }}</td>
+				<td>
+					{% if log.get_case_no %}
+					<a class="btn-link" target="_blank" href="{% url 'case_detail' log.get_case_no %} ">{{ log.get_case_no }}</a>
+					{% endif %}
+				</td>
 				<td>{{ log.translate_case_no }}</td>
 				<td>{{ log.hostname }}</td>
 				<td>{{ log.time }}</td>

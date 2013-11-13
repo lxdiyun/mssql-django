@@ -60,7 +60,18 @@
 				success
 				{% endif %}
 				">   
-				<td>{{ forloop.counter }} {{ case.list_state }}</td>   
+				<td>
+					{{ forloop.counter }}
+					{% if case.is_error %}
+					error
+					{% elif case.is_warning %}
+					warning
+					{% elif case.is_info %}
+					info
+					{% elif case.is_success %}
+					success
+					{% endif %}
+				</td>   
 				<td>
 					{{ case.translate }}<br>
 					<a class="btn-link" target="_blank" href="{% url 'case_detail' case.szbookcaseno%} ">{{ case.szbookcaseno }}</a><br>
