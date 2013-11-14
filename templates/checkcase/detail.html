@@ -86,7 +86,9 @@
 					</a>
 					<br>
 					{% if book.bforcesortcase %}<strong>[强制定位]</strong>{% endif %}
+					{% if book.szbookcaseno %}
 					{{ book.get_case_info }}: <a class="btn-link" target="_blank" href="{% url 'case_detail' book.szbookcaseno%} ">{{ book.szbookcaseno }}</a>
+					{% endif %}
 					<br>
 					{{ book.szbookid }}
 					<br>
