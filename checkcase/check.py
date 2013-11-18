@@ -132,9 +132,17 @@ def check_case(p, n, case_list):
 
     # 区域变换
     if p_area_no != n_area_no:
+        result = True
+        # 连续跨区是错误
+        if p.across_area:
+            result = False
+
+        p.across_area = True
+        n.across_area = True
         p.is_info = True
         n.is_info = True
-        return True
+
+        return result
 
 #    prin(p_row_no, m_row_no, m_layer_no)
     return check_special(p, n)
@@ -156,6 +164,7 @@ def check_cases(cases):
         next_case = case
         case.is_error = False
         case.is_warning = False
+        case.across_area = False
         if case.szfirstbookid in book_dict:
             case.book = book_dict[case.szfirstbookid]
             if case.szbookcaseno != case.book.szbookcaseno:
