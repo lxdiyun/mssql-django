@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.views.generic import TemplateView
-from rfid.models import Bookinfo
 from django.db.models import Q
+from rfid.models import Bookinfo
 
 
 class BooksNoCaseView(TemplateView):

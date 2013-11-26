@@ -44,9 +44,9 @@
 			</td>
 			<td>{{ case.szpretendindexnum }}</td>     
 			<td>
-				{% if case.szfirstbookid %}
-				<a class="btn-link" target="_blank" href="{% url 'book_detail' case.szfirstbookid %}">
-					{{ case.szfirstbookid }}
+				{% if case.firstbook %}
+				<a class="btn-link" target="_blank" href="{% url 'book_detail' case.firstbook.szbookid %}">
+					{{ case.firstbook.szbookid }}
 				</a>
 					
 				{% endif %}

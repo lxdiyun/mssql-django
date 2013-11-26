@@ -111,7 +111,7 @@ def check_case(p, n, case_list):
     n_area_no = int(n.szbookcaseno[:6])
 
     # 首书重复
-    if p.szfirstbookid == n.szfirstbookid:
+    if p.firstbook == n.firstbook:
         return False
 
     # 层变换
@@ -156,21 +156,17 @@ def check_cases(cases):
     warning_count = 0
     case_id_list = list(int(case.szbookcaseno) for case in cases)
     error_list = list()
-    book_id_list = list(case.szfirstbookid for case in cases)
-    books = Bookinfo.get_books(book_id_list)
-    book_dict = dict((book.szbookid, book) for book in books)
 
     for case in cases:
         next_case = case
         case.is_error = False
         case.is_warning = False
         case.across_area = False
-        if case.szfirstbookid in book_dict:
-            case.book = book_dict[case.szfirstbookid]
-            if case.szbookcaseno != case.book.szbookcaseno:
+        if case.firstbook:
+            if case.szbookcaseno != case.firstbook.szbookcaseno:
                 case.is_warning = True
 
-            if case.book.szpretendindexnum != case.szpretendindexnum:
+            if case.firstbook.szpretendindexnum != case.szpretendindexnum:
                 case.is_warning = True
 
             if current_case:

@@ -98,6 +98,7 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.gzip.GZipMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -106,6 +107,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware'
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -176,7 +178,7 @@ DATETIME_FORMAT = 'Y-m-d H:m:s'
 
 # debug toolbar setting
 if DEBUG is True:
-    INTERNAL_IPS = ('127.00.0.1', '10.35.24.18')
+    INTERNAL_IPS = ('127.0.0.1', '10.35.24.18', '10.0.2.2')
 
     def custom_show_toolbar(request):
         return True  # Always show toolbar, for example purposes only.
@@ -190,3 +192,12 @@ if DEBUG is True:
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
     'django.core.context_processors.request',
 )
+
+CACHES = {
+    'default': {
+        'BACKEND':
+        'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }}
+CACHE_MIDDLEWARE_SECONDS = 12
+CACHE_MIDDLEWARE_KEY_PREFIX = "rfid_cache"

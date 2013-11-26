@@ -50,7 +50,7 @@
 				<td>
 					{% if case %}
 					{{ case.translate }}:<a class="btn-link" target="_blank" href="{% url 'case_detail' case.szbookcaseno%} ">{{ case.szbookcaseno }}</a><br>
-					<a class="btn-link" target="_blank" href="{% url 'book_detail' case.szfirstbookid%} ">{{ case.szfirstbookid }}</a>
+					<a class="btn-link" target="_blank" href="{% url 'book_detail' case.firstbook.szbookid %} ">{{ case.firstbook.szbookid }}</a>
 					:{{ case.book.szbookindex|default:"Not Exist!!" }}<br>
 					{{ case.szpretendindexnum }}
 					{% endif %}

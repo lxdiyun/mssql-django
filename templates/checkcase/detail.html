@@ -75,11 +75,11 @@
 				<td>
 					{{ case.translate }}<br>
 					<a class="btn-link" target="_blank" href="{% url 'case_detail' case.szbookcaseno%} ">{{ case.szbookcaseno }}</a><br>
-					{{ case.szfirstbookid }}<br>
+					{{ case.firstbook.szbookid }}<br>
 					{{ case.szpretendindexnum }}
 				</td>     
 				<td>
-					{% with case.book as book %}
+					{% with case.firstbook as book %}
 					{% if book %}
 					<a class="btn-link" target="_blank" href="{% url 'book_detail' book.szbookid %}">
 						{{ book.szname }}

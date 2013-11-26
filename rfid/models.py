@@ -155,7 +155,9 @@ class Bookcaseidinfo(models.Model):
     nbookcaseinfoid = models.IntegerField(null=True,
                                           db_column='nBookCaseInfoID',
                                           blank=True)
-    szfirstbookid = models.TextField(db_column='szFirstBookID', blank=True)
+    firstbook = models.ForeignKey('Bookinfo',
+                                  to_field="szbookid",
+                                  db_column='szFirstBookID')
     nid = models.IntegerField(db_column='nID')
     szpretendindexnum = models.TextField(db_column='szPretendIndexNum',
                                          blank=True)
@@ -175,12 +177,10 @@ class Bookcaseidinfo(models.Model):
     def get_cases_by_catalog(catalog_prefix,
                              order_by='szpretendindexnum',
                              exculde_empty=True):
-        cases = Bookcaseidinfo.objects.all()
+        cases = Bookcaseidinfo.objects.select_related('firstbook')
         if exculde_empty:
-            cases = Bookcaseidinfo.objects.exclude(szfirstbookid__isnull=True)
-            cases = cases.exclude(szfirstbookid__exact='')
-        else:
-            cases = Bookcaseidinfo.objects
+            cases = cases.exclude(firstbook__isnull=True)
+            cases = cases.exclude(firstbook__exact='')
         cases = cases.filter(szpretendindexnum__startswith=catalog_prefix)
         cases = cases.order_by(order_by)
 
@@ -191,11 +191,10 @@ class Bookcaseidinfo(models.Model):
                           order_by='szpretendindexnum',
                           exculde_empty=True):
         area = "%06d" % area_prefix
+        cases = Bookcaseidinfo.objects.select_related('firstbook')
         if exculde_empty:
-            cases = Bookcaseidinfo.objects.exclude(szfirstbookid__isnull=True)
-            cases = cases.exclude(szfirstbookid__exact='')
-        else:
-            cases = Bookcaseidinfo.objects
+            cases = cases.exclude(firstbook__isnull=True)
+            cases = cases.exclude(firstbook__exact='')
         cases = cases.filter(szbookcaseno__startswith=area)
         cases = cases.order_by(order_by)
 
