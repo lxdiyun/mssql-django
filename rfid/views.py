@@ -49,13 +49,11 @@ class CaseDetailView(TemplateView):
         context = super(CaseDetailView, self).get_context_data(**kwargs)
         case_id = kwargs['caseid']
         case = None
-        firstbook = None
         books = None
         try:
-            case = Bookcaseidinfo.objects.get(szbookcaseno=case_id)
+            case = Bookcaseidinfo.objects.select_related('firstbook').get(
+                szbookcaseno=case_id)
             books = Bookinfo.objects.filter(szbookcaseno=case.szbookcaseno)
-            firstbook = Bookinfo.objects.get(szbookid=case.szfirstbookid)
-            case.book = firstbook
         except Bookcaseidinfo.DoesNotExist:
             pass
         except Bookinfo.DoesNotExist:
@@ -83,7 +81,8 @@ class CaseCatalogListView(TemplateView):
             order_by = "dtlastordercase"
             cases = Bookcaseidinfo.get_cases_by_catalog(catalog_prefix,
                                                         order_by=order_by,
-                                                        exculde_empty=False)
+                                                        exculde_empty=False,
+                                                        select_related=False)
             context['cases'] = cases
             context["list_title"] = CATALOG_DICT[catalog][0]
             context["total_count"] = len(cases)
@@ -106,7 +105,8 @@ class CaseAreaListView(TemplateView):
             order_by = "dtlastordercase"
             cases = Bookcaseidinfo.get_cases_by_area(area,
                                                      order_by=order_by,
-                                                     exculde_empty=False)
+                                                     exculde_empty=False,
+                                                     select_related=False)
             context['cases'] = cases
             context["total_count"] = len(cases)
 

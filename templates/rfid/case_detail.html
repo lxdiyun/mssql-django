@@ -6,8 +6,8 @@
 <div class="container-fluid">
 	<h2>{{ case.translate }} {{ case }}</h2>
 	<hr></hr>
-	{% if case.book %}
-	{% with case.book as book  %}
+	{% if case.firstbook %}
+	{% with case.firstbook as book  %}
 	<p><strong>首书：</strong>{{ book.szname }}</a> </p>
 	<p><strong>首书登录号：</strong><a class="btn-link" target="_blank" href="{% url 'book_detail' book.szbookid%} ">{{ book.szbookid }}</a> </p>
 	<p><strong>首书所属层架信息：</strong>{{ book.get_case_info }}</p>
