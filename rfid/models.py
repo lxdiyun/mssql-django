@@ -157,7 +157,8 @@ class Bookcaseidinfo(models.Model):
                                           blank=True)
     firstbook = models.ForeignKey('Bookinfo',
                                   to_field="szbookid",
-                                  db_column='szFirstBookID')
+                                  db_column='szFirstBookID',
+                                  null=True)
     nid = models.IntegerField(db_column='nID')
     szpretendindexnum = models.TextField(db_column='szPretendIndexNum',
                                          blank=True)
