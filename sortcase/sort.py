@@ -29,7 +29,7 @@ def sort_cases(cases, across_catalog=False):
         print("[%d/%d] %s %s %s" % (count,
                                     total,
                                     case.szbookcaseno,
-                                    case.firstbook.szbookid,
+                                    case.firstbook_id,
                                     case.szpretendindexnum))
         if 1 < count:
             start_index = pre_case.szpretendindexnum
