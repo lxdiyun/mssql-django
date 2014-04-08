@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from rfid.models import Bookinfo, Bookcaseidinfo
 
-CHECKED_CATALOG_LIST = ['C', 'B', 'E', 'F', 'I', 'K', 'N', 'O', 'P', 'Q', 'R',
-                        'S', 'T', 'U', 'V', 'Z',
+CHECKED_CATALOG_LIST = ['A', 'B', 'C', 'E', 'F', 'G', 'I', 'K', 'N', 'O', 'P',
+                        'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Z',
                         'TB', 'TD', 'TE', 'TF', 'TG', 'TH', 'TJ', 'TK', 'TL',
                         'TM', 'TN', 'TP', 'TQ', 'TS', 'TU', 'TV', ]
 

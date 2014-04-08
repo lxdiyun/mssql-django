@@ -18,19 +18,15 @@ def sort_books(case_no, start_index, end_index):
     books = books.filter(szpretendindexnum__lt=end_index)
     books = books.filter(bforcesortcase=0)
     #    print('after: %d' % len(books))
-    books.update(szbookcaseno=case_no)
+    return books.update(szbookcaseno=case_no)
 
 
 def sort_cases(cases, across_catalog=False):
     count = 1
     total = len(cases)
     pre_case = None
+    affected_books = 0
     for case in cases:
-        print("[%d/%d] %s %s %s" % (count,
-                                    total,
-                                    case.szbookcaseno,
-                                    case.firstbook_id,
-                                    case.szpretendindexnum))
         if 1 < count:
             start_index = pre_case.szpretendindexnum
             end_index = case.szpretendindexnum
@@ -42,7 +38,9 @@ def sort_cases(cases, across_catalog=False):
                       % case.szbookcaseno)
                 end_index = start_prefix + "{{{"
 
-            sort_books(pre_case.szbookcaseno, start_index, end_index)
+            affected_books = sort_books(pre_case.szbookcaseno,
+                                        start_index,
+                                        end_index)
 
         if count == total:
             start_index = case.szpretendindexnum
@@ -51,8 +49,16 @@ def sort_cases(cases, across_catalog=False):
                             case.szpretendindexnum)
             if "0113TD{{{" == end_index:
                 end_index = "0114TE{{{"
-            sort_books(case.szbookcaseno, start_index, end_index)
+            affected_books = sort_books(case.szbookcaseno,
+                                        start_index,
+                                        end_index)
 
+        print("[%d/%d] %s %s %s (books: %d)" % (count,
+                                                total,
+                                                case.szbookcaseno,
+                                                case.firstbook_id,
+                                                case.szpretendindexnum,
+                                                affected_books))
         count += 1
         pre_case = case
 
