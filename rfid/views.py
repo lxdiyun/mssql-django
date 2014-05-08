@@ -78,7 +78,7 @@ class CaseCatalogListView(TemplateView):
         catalog = int(kwargs['catalogid'])
         if catalog in CATALOG_DICT:
             catalog_prefix = CATALOG_DICT[catalog][1]
-            order_by = "dtlastordercase"
+            order_by = ["dtlastordercase"]
             cases = Bookcaseidinfo.get_cases_by_catalog(catalog_prefix,
                                                         order_by=order_by,
                                                         exculde_empty=False,
@@ -102,7 +102,7 @@ class CaseAreaListView(TemplateView):
         if area in AREA_DICT:
             context["list_title"] = "%s %s" % (AREA_DICT[area][0],
                                                AREA_DICT[area][1])
-            order_by = "dtlastordercase"
+            order_by = ["dtlastordercase"]
             cases = Bookcaseidinfo.get_cases_by_area(area,
                                                      order_by=order_by,
                                                      exculde_empty=False,

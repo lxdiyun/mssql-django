@@ -176,7 +176,7 @@ class Bookcaseidinfo(models.Model):
 
     @staticmethod
     def get_cases_by_catalog(catalog_prefix,
-                             order_by='szpretendindexnum',
+                             order_by=['szpretendindexnum', 'szbookcaseno'],
                              exculde_empty=True,
                              select_related=True):
         cases = Bookcaseidinfo.objects
@@ -188,13 +188,13 @@ class Bookcaseidinfo(models.Model):
             cases = cases.exclude(firstbook__isnull=True)
             cases = cases.exclude(firstbook__exact='')
         cases = cases.filter(szpretendindexnum__startswith=catalog_prefix)
-        cases = cases.order_by(order_by)
+        cases = cases.order_by(*order_by)
 
         return cases
 
     @staticmethod
     def get_cases_by_area(area_prefix,
-                          order_by='szpretendindexnum',
+                          order_by=['szpretendindexnum', 'szbookcaseno'],
                           exculde_empty=True,
                           select_related=True):
         area = "%06d" % area_prefix
@@ -207,6 +207,6 @@ class Bookcaseidinfo(models.Model):
             cases = cases.exclude(firstbook__isnull=True)
             cases = cases.exclude(firstbook__exact='')
         cases = cases.filter(szbookcaseno__startswith=area)
-        cases = cases.order_by(order_by)
+        cases = cases.order_by(*order_by)
 
         return cases

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from rfid.models import Bookinfo, Bookcaseidinfo
 
-CHECKED_CATALOG_LIST = ['A', 'B', 'C', 'E', 'F', 'G', 'I', 'K', 'N', 'O', 'P',
-                        'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Z',
+CHECKED_CATALOG_LIST = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'I', 'J', 'K', 'N',
+                        'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Z',
                         'TB', 'TD', 'TE', 'TF', 'TG', 'TH', 'TJ', 'TK', 'TL',
                         'TM', 'TN', 'TP', 'TQ', 'TS', 'TU', 'TV', ]
 
@@ -40,7 +40,7 @@ def check_special(p, n):
         '00001100600206': '00001100600401',
 
         # 三楼西北区内侧 G,J交界
-        '00002103700306': '00002100100301',
+        '00002103700306': '00002100100101',
     }
 
     key = p.szbookcaseno
