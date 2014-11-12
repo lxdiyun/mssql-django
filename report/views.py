@@ -76,6 +76,7 @@ class ExportNotPopualrBooksView(View):
                    'get_case_info',
                    'szbookcaseno',
                    'dtconvertdate',
+                   'bforcesortcase',
                    'dtborrowdate']
 
     header = [u"登录号",
@@ -84,6 +85,7 @@ class ExportNotPopualrBooksView(View):
               u"层位信息",
               u"层位代码",
               u"注册日期",
+              u"强制定位",
               u"最近借出日期"]
 
     def get(self, request, *args, **kwargs):

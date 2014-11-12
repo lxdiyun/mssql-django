@@ -1,7 +1,7 @@
 # Django settings for ms project.
 import django.conf.global_settings as DEFAULT_SETTINGS
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -27,7 +27,7 @@ DATABASES = {
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.64.128']
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -100,7 +100,6 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.gzip.GZipMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -141,7 +140,6 @@ INSTALLED_APPS = (
     'checkcase',
     'triggerlog',
     'django_extensions',
-    'debug_toolbar',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -175,18 +173,6 @@ LOGGING = {
 
 DATE_FORMAT = 'Y-m-d'
 DATETIME_FORMAT = 'Y-m-d H:m:s'
-
-# debug toolbar setting
-if DEBUG is True:
-    INTERNAL_IPS = ('127.0.0.1', '10.35.24.18', '10.0.2.2')
-
-    def custom_show_toolbar(request):
-        return False  # Always show toolbar, for example purposes only.
-
-    DEBUG_TOOLBAR_CONFIG = {
-        # 'SHOW_TOOLBAR_CALLBACK': custom_show_toolbar,
-        'TAG': 'body',
-    }
 
 # template preocessors
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
