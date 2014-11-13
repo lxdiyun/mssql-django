@@ -1,4 +1,5 @@
 from django.views.generic import TemplateView
+from django.db.models import Max
 from rfid.models import Bookinfo, Bookcaseidinfo
 from rfid.forms import BookQueryForm
 from rfid.utils import CATALOG_DICT, AREA_DICT
@@ -16,6 +17,7 @@ class BookDetailView(TemplateView):
         book = None
         try:
             book = Bookinfo.objects.get(szbookid=book_id)
+            book.latest_borrow_date = book.booklastestborrowdateview.latest_borrow_date 
         except Bookinfo.DoesNotExist:
             book = {'szname': "Not exist"}
 

@@ -4,6 +4,7 @@ from django.db import models
 from utils import trans_case_no
 from urllib import quote
 from re import sub
+from django.db.models import Max
 
 
 class Bookinfo(models.Model):
@@ -121,7 +122,8 @@ class Bookinfo(models.Model):
         index = 0
         books = list()
         while index < len(book_id_list):
-            books += Bookinfo.objects.filter(
+            books += Bookinfo.objects.annotate(
+                latest_borrow_date=Max("booklastestborrowdateview__latest_borrow_date")).filter(
                 szbookid__in=book_id_list[index:index+2000])
             index += 2000
 
@@ -210,3 +212,52 @@ class Bookcaseidinfo(models.Model):
         cases = cases.order_by(*order_by)
 
         return cases
+
+
+class Borrowhisindex(models.Model):
+    nhisindexid = models.AutoField(primary_key=True, db_column='nHisIndexID')
+    szreaderid = models.TextField(db_column='szReaderID', blank=True)
+    szreadername = models.TextField(db_column='szReaderName', blank=True)
+
+    class Meta:
+        db_table = 'BorrowHisIndex'
+
+
+class BookLastestBorrowDateView(models.Model):
+    # this is a database view not table, read only !!!
+    latest_borrow_date = models.DateTimeField(null=True,
+                                              db_column='latest_borrow_date',
+                                              blank=True)
+    szbookcaseno = models.TextField(db_column='szBookCaseNo', blank=True)
+    nbookstatus = models.IntegerField(null=True,
+                                      db_column='nBookStatus',
+                                      blank=True)
+    szbookid = models.TextField(Bookinfo, db_column='szBookID')
+    szbook = models.OneToOneField(Bookinfo, primary_key=True, db_column='szBookID')
+    szname = models.TextField(db_column='szName', blank=True)
+    szbookindex = models.TextField(db_column='szBookIndex', blank=True)
+    bforcesortcase = models.NullBooleanField(null=True,
+                                             db_column='bForceSortCase',
+                                             blank=True)
+    dtconvertdate = models.DateTimeField(null=True,
+                                         db_column='dtConvertDate',
+                                         blank=True)
+    szpretendindexnum = models.TextField(db_column='szPretendIndexNum',
+                                         blank=True)
+
+    def get_case_info(self):
+        return trans_case_no(self.szbookcaseno)
+
+    class Meta:
+        db_table = 'v_BookLatestBorrowDate'
+
+    @staticmethod
+    def get_books_by_query(qs):
+    # we need this function cause sqlserver 2005 has 2100 parameters limits
+        index = 0
+        books = list()
+        while index < len(qs):
+            books += qs[index:index+2000]
+            index += 2000
+
+        return books

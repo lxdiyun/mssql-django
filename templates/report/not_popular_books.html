@@ -13,7 +13,6 @@
 			<t class="control-group">
 			<p class="help-block"></p>
 			<button type="submit" class="btn btn-info">查询</button>
-			在
 			<input id="datepicker"
 			name="date" 
 			placeholder="此日期" 
@@ -23,17 +22,16 @@
 			data-validation-required-message="请填写日期"
 			value="{% if query_date %}{{ query_date }}{% endif %}"
 			>
-			后
+			后，
 			</t>
-
-			<select id="query_by" name="query_by">
+			且在<select id="query_by" name="query_by">
 				{% for key, catalog in CATALOG_DICT.items %}
 				<option value="catalog_{{ key }}"
 				{% if sub == key and 'catalog' == query_by %}
 				selected="selected"
 				{% endif %}
 				>
-				{{ catalog.0 }}类
+				{{ catalog.0 }}
 				</option>
 				{% endfor %}
 				{% for key, area in AREA_DICT.items %}
@@ -43,8 +41,7 @@
 				{% endif %}
 				>{{ area.0 }}-{{ area.1 }}</option>
 				{% endfor %}
-			</select>
-			中未有出借的图书
+			</select> 中，未有借换记录的图书
 		</fieldset>
 	</form>
 	{% if books %}

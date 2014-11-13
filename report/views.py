@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.views.generic import ListView
 from django.views.generic.base import View
-from rfid.models import Bookinfo
+from rfid.models import Bookinfo, BookLastestBorrowDateView
 from django.db.models import Q
 from django.utils.dateparse import parse_date
 from rfid.utils import AREA_DICT, CATALOG_DICT
@@ -37,8 +37,8 @@ class NotPopularBooksView(ListView):
     def get_queryset(self):
         books = []
         if self.date and self.query_by:
-            date_q = Q(dtborrowdate__lte=self.date)
-            empty_date_q = Q(dtborrowdate__isnull=True)
+            date_q = Q(latest_borrow_date__lte=self.date)
+            empty_date_q = Q(latest_borrow_date__isnull=True)
             sub_q = None
 
             if "catalog" == self.query_by and (self.sub in CATALOG_DICT):
@@ -52,8 +52,8 @@ class NotPopularBooksView(ListView):
                 self.query_scope = area[0] + "-" + area[1]
 
             if sub_q:
-                books = Bookinfo.objects.filter(sub_q & (date_q | empty_date_q))
-                books = books.order_by('dtborrowdate', 'szbookid')
+                books = BookLastestBorrowDateView.objects
+                books = books.filter(sub_q & (date_q | empty_date_q))
 
         return books
 
@@ -77,7 +77,7 @@ class ExportNotPopualrBooksView(View):
                    'szbookcaseno',
                    'dtconvertdate',
                    'bforcesortcase',
-                   'dtborrowdate']
+                   'latest_borrow_date']
 
     header = [u"登录号",
               u"书名",
@@ -94,7 +94,8 @@ class ExportNotPopualrBooksView(View):
         scope = int(kwargs.get('scope'))
 
         if date and query_by and scope:
-            books = self.get_queryset(date, query_by, scope)
+            books_query = self.get_queryset(date, query_by, scope)
+            books = BookLastestBorrowDateView.get_books_by_query(books_query)
 
             return export_as_csv("not_popular_books",
                                  ExportNotPopualrBooksView.field_names,
@@ -104,8 +105,8 @@ class ExportNotPopualrBooksView(View):
         return HttpResponse()
 
     def get_queryset(self, date, query_by, scope):
-        date_q = Q(dtborrowdate__lte=date)
-        empty_date_q = Q(dtborrowdate__isnull=True)
+        date_q = Q(latest_borrow_date__lte=date)
+        empty_date_q = Q(latest_borrow_date__isnull=True)
         sub_q = None
         books = []
 
@@ -116,7 +117,7 @@ class ExportNotPopualrBooksView(View):
             sub_q = Q(szbookcaseno__startswith=area_prefix)
 
         if sub_q:
-            books = Bookinfo.objects.filter(sub_q & (date_q | empty_date_q))
-            books = books.order_by('dtborrowdate', 'szbookid')
+            books = BookLastestBorrowDateView.objects
+            books = books.filter(sub_q & (date_q | empty_date_q))
 
         return books

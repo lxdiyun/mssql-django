@@ -22,6 +22,7 @@
 	<p><strong>是否外借：</strong>{% ifequal 9 book.nbookstatus %}是{% else %}否{% endifequal %}</p>
 	<p><strong>借书日期：</strong>{{ book.dtborrowdate }}</p>
 	<p><strong>应还日期：</strong>{{ book.dtneedbackdate }}</p>
+	<p><strong>最近借还时间：</strong>{{ book.latest_borrow_date }}</p>
 	<a class="btn-link" target="_blank" href="{{ book.get_search_url }}">在图书馆中查找该书<i class="icon-hand-right"></i></a>
 </div>
 {% endblock content %}
