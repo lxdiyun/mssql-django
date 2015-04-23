@@ -65,7 +65,7 @@ class CaseDetailView(TemplateView):
         if books:
             context['books'] = books
             context['total'] = len(books)
-            context['borrowed'] = len(filter(lambda b: b.nbookstatus != 1,
+            context['borrowed'] = len(filter(lambda b: b.nbookstatus == 9,
                                              books))
 
         return context
